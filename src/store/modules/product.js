@@ -22,17 +22,7 @@ const mutations = {
     state.products.push(product);
   },
   refreshProducts(state, inComing) {
-    let products = [];
-    for (let key in inComing) {
-      let obj = {};
-      obj.id = key;
-      obj.title = inComing[key].title;
-      obj.price = inComing[key].price;
-      obj.count = inComing[key].count;
-      obj.description = inComing[key].description;
-      products.push(obj);
-    }
-    state.products = products;
+    state.products = inComing;
   }
 };
 
@@ -41,35 +31,33 @@ const mutations = {
 
 const actions = {
   initApp({commit}) {
-    Vue.http.get("https://urunislemleri-ac043.firebaseio.com/products.json")
+    Vue.http.get("product/all")
       .then(response => {
         commit("refreshProducts", response.data);
       })
   },
   saveProduct({dispatch, commit}, product) {
-    Vue.http.post("https://urunislemleri-ac043.firebaseio.com/products.json", product)
+    Vue.http.post("product/create", product)
       .then((response) => {
-        product.id = response.data.name;
-        commit("updateProductList", product);
+        commit("updateProductList", response.data);
         let tradeResult = {
-          purchase: product.price,
+          purchase: response.data.price,
           sale: 0,
-          count: product.count
+          count: response.data.count
         };
         dispatch("setTradeResult", tradeResult);
         router.push("/");
       })
   },
   sellProduct({commit, dispatch}, product) {
-    let count = product.sellCount;
-    delete product.sellCount;
-    Vue.http.put("https://urunislemleri-ac043.firebaseio.com/products/" + product.id + ".json", product)
+    Vue.http.put("product/update", product)
       .then(response => {
         let tradeResult = {
           purchase: 0,
-          sale: product.price,
-          count: count
+          sale: response.data.price,
+          count: response.data.count
         };
+        product.count = response.data.count;
         dispatch("setTradeResult", tradeResult);
         router.push("/");
       })

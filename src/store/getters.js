@@ -5,5 +5,3 @@ export const getTradeResult = (state) => {
    balance : state.balance
  }
 };
-
-

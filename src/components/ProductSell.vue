@@ -83,7 +83,6 @@
           return;
         }
         this.saveButtonClicked = true;
-        this.selectedProduct.count = parseInt(this.selectedProduct.count) - parseInt(this.sellCount);
         this.selectedProduct.sellCount = parseInt(this.sellCount);
         this.$store.dispatch("sellProduct", this.selectedProduct);
       }

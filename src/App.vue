@@ -19,8 +19,14 @@
       return {}
     },
     created() {
-      this.$store.dispatch("getTradeResult");
-      this.$store.dispatch("initApp");
+      if (this.$store.state.isLogin == null) {
+        this.$store.dispatch("initIsLogin");
+      }
+      if (this.$store.state.isLogin) {
+        this.$store.dispatch("getTradeResult");
+        this.$store.dispatch("initApp");
+      }
+
     }
   }
 </script>

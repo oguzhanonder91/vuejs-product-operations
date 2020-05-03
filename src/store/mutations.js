@@ -1,11 +1,12 @@
 export const updateTradeResult = (state, trade) => {
-  if(trade.count){
-    state.purchase += parseFloat(trade.purchase) * parseInt(trade.count);
-    state.sale += parseFloat(trade.sale) * parseInt(trade.count);
-  }else{
-    state.purchase += parseFloat(trade.purchase);
-    state.sale += parseFloat(trade.sale) ;
-  }
-  state.balance = parseFloat(state.sale) - parseFloat(state.purchase);
+  state.count = trade.count;
+  state.sale = trade.sale;
+  state.purchase=trade.purchase;
+  state.balance = trade.balance;
 };
+
+export const setIsLogin = (state,val) => {
+  state.isLogin = val;
+};
+
 

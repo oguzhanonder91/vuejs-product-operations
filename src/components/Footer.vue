@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed-bottom  navbar-light" style="background-color: #e3f2fd;">
+  <nav v-if="this.$store.state.isLogin" class="navbar fixed-bottom  navbar-light" style="background-color: #e3f2fd;">
     <span class="navbar-text mr-auto">
         <strong>Vuejs Çalışmaları</strong> | Oğuzhan ÖNDER
     </span>

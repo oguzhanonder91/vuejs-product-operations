@@ -11,7 +11,9 @@ Vue.use(Vuex);
   state: {
     purchase: 0.0,
     sale: 0.0,
-    balance: 0.0
+    balance: 0.0,
+    isLogin : null,
+    user : null
   },
   getters: getters,
   mutations: mutations,
