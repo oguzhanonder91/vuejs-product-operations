@@ -1,12 +1,39 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import ProductList from '../components/ProductList';
-import ProductPurchase from '../components/ProductPurchase';
-import ProductSell from '../components/ProductSell';
-import Login from '../components/Login';
-import Register from '../components/Register';
 import store from '../store/store';
 import * as util from '../util/util';
+
+const ProductList = resolve  =>{
+  require.ensure(['../components/ProductList'] , () =>{
+    resolve (require("../components/ProductList"))
+  })
+}
+
+const ProductPurchase = resolve  =>{
+  require.ensure(['../components/ProductPurchase'] , () =>{
+    resolve (require("../components/ProductPurchase"))
+  })
+}
+
+
+const ProductSell = resolve  =>{
+  require.ensure(['../components/ProductSell'] , () =>{
+    resolve (require("../components/ProductSell"))
+  })
+}
+
+const Login = resolve  =>{
+  require.ensure(['../components/Login'] , () =>{
+    resolve (require("../components/Login"))
+  })
+}
+
+
+const Register = resolve  =>{
+  require.ensure(['../components/Login'] , () =>{
+    resolve (require("../components/Login"))
+  })
+}
 
 
 Vue.use(VueRouter);

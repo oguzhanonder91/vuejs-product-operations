@@ -8,11 +8,11 @@ import * as util from "./util/util";
 
 Vue.use(VueResource);
 
-Vue.http.options.root="http://localhost:8081/";
+Vue.http.options.root = "http://localhost:8081/";
 
-Vue.http.interceptors.push((request,next)=>{
-  if(store.state.isLogin!=null && store.state.isLogin && localStorage.getItem(util.token)){
-      request.headers.set('Authorization', 'Bearer ' + localStorage.getItem(util.token));
+Vue.http.interceptors.push((request, next) => {
+  if (store.state.isLogin != null && store.state.isLogin && localStorage.getItem(util.token)) {
+    request.headers.set('Authorization', 'Bearer ' + localStorage.getItem(util.token));
   }
 })
 
