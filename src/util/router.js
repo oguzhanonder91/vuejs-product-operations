@@ -30,8 +30,8 @@ const Login = resolve  =>{
 
 
 const Register = resolve  =>{
-  require.ensure(['../components/Login'] , () =>{
-    resolve (require("../components/Login"))
+  require.ensure(['../components/Register'] , () =>{
+    resolve (require("../components/Register"))
   })
 }
 
