@@ -12,7 +12,9 @@ export const getTradeResult = ({commit}) => {
   Vue.http.get("trade/result")
     .then(response => {
       commit("updateTradeResult", response.data);
-    })
+    }).catch(error=>{
+     util.notify.control(commit,error)
+  })
 };
 
 

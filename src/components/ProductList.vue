@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="this.$store.state.isLogin" class="container">
     <div class="row">
       <div class="col-12 mb-5 card mt-5 shadow">
         <div class="card-body">

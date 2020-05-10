@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import router from '../../util/router';
+import * as util from "../../util/util";
 
 const state = {
   products: [],
@@ -34,7 +35,9 @@ const actions = {
     Vue.http.get("product/all")
       .then(response => {
         commit("refreshProducts", response.data);
-      })
+      }).catch(error => {
+      util.notify.control(commit, error)
+    })
   },
   saveProduct({dispatch, commit}, product) {
     Vue.http.post("product/create", product)
@@ -47,7 +50,9 @@ const actions = {
         };
         dispatch("setTradeResult", tradeResult);
         router.push("/");
-      })
+      }).catch(error => {
+      util.notify.control(commit, error)
+    })
   },
   sellProduct({commit, dispatch}, product) {
     Vue.http.put("product/update", product)
@@ -60,7 +65,9 @@ const actions = {
         product.count = response.data.count;
         dispatch("setTradeResult", tradeResult);
         router.push("/");
-      })
+      }).catch(error => {
+      util.notify.control(commit, error)
+    })
   }
 }
 

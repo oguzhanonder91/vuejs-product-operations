@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="this.$store.state.isLogin" class="container">
     <div class="loading" :style="isLoading">
       <div class="lds-ripple">
         <div></div>

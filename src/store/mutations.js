@@ -1,3 +1,4 @@
+
 export const updateTradeResult = (state, trade) => {
   state.count = trade.count;
   state.sale = trade.sale;
