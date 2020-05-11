@@ -32,7 +32,7 @@ const mutations = {
 
 const actions = {
   initApp({commit}) {
-    Vue.http.get("product/all")
+    util.service.get("product/all")
       .then(response => {
         commit("refreshProducts", response.data);
       }).catch(error => {
@@ -40,7 +40,7 @@ const actions = {
     })
   },
   saveProduct({dispatch, commit}, product) {
-    Vue.http.post("product/create", product)
+    util.service.post("product/create",product)
       .then((response) => {
         commit("updateProductList", response.data);
         let tradeResult = {
@@ -55,7 +55,7 @@ const actions = {
     })
   },
   sellProduct({commit, dispatch}, product) {
-    Vue.http.put("product/update", product)
+    util.service.put("product/update",product)
       .then(response => {
         let tradeResult = {
           purchase: 0,
@@ -67,7 +67,7 @@ const actions = {
         router.push("/");
       }).catch(error => {
       util.notify.control(commit, error)
-    })
+    });
   }
 }
 

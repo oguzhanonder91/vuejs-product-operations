@@ -37,12 +37,10 @@
     },
     methods: {
       login() {
-        this.loading = true;
         this.$store.dispatch("login", this.loginRequest)
           .then(res => {
             this.$store.dispatch("getTradeResult");
             this.$store.dispatch("initApp");
-            this.loading = false
             this.$router.push("/");
           })
       },
