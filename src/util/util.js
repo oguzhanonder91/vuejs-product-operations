@@ -3,6 +3,7 @@ import router from '../util/router';
 import Vue from "vue";
 
 export const token = "mytoken";
+export const rndData = "ond75";
 
 export const notify = {
   control(commit, error) {

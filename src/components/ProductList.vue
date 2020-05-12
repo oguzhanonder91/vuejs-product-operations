@@ -9,7 +9,8 @@
             <thead>
             <th>id</th>
             <th>Ürün Adı</th>
-            <th>Adet</th>
+            <th>Kalan Adet</th>
+            <th>Satılan Adet</th>
             <th>Fiyat</th>
             <th>Açıklama</th>
             </thead>
@@ -18,6 +19,7 @@
               <td class="align-middle text-center"><span class="badge badge-info"> {{product.id}} </span></td>
               <td class="align-middle text-center"> {{product.title}}</td>
               <td class="align-middle text-center" :class="getCountClass(product.count)"> {{product.count}}</td>
+              <td class="align-middle text-center"> {{product.sellCount}}</td>
               <td style="width: 120px;"> {{product.price | currency}}</td>
               <td class="align-middle"> {{product.description}}</td>
             </tr>

@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import router from '../../util/router';
 import * as util from "../../util/util";
 
@@ -34,37 +33,45 @@ const actions = {
   initApp({commit}) {
     util.service.get("product/all")
       .then(response => {
-        commit("refreshProducts", response.data);
+        if (response) {
+          commit("refreshProducts", response.data);
+        }
       }).catch(error => {
       util.notify.control(commit, error)
     })
   },
   saveProduct({dispatch, commit}, product) {
-    util.service.post("product/create",product)
+    util.service.post("product/create", product)
       .then((response) => {
-        commit("updateProductList", response.data);
-        let tradeResult = {
-          purchase: response.data.price,
-          sale: 0,
-          count: response.data.count
-        };
-        dispatch("setTradeResult", tradeResult);
-        router.push("/");
+        if (response) {
+          commit("updateProductList", response.data);
+          let tradeResult = {
+            purchase: response.data.price,
+            sale: 0,
+            count: response.data.count
+          };
+          dispatch("setTradeResult", tradeResult);
+          router.push("/");
+        }
+
       }).catch(error => {
       util.notify.control(commit, error)
     })
   },
   sellProduct({commit, dispatch}, product) {
-    util.service.put("product/update",product)
+    util.service.put("product/update", product)
       .then(response => {
-        let tradeResult = {
-          purchase: 0,
-          sale: response.data.price,
-          count: response.data.count
-        };
-        product.count = response.data.count;
-        dispatch("setTradeResult", tradeResult);
-        router.push("/");
+        if (response) {
+          let tradeResult = {
+            purchase: 0,
+            sale: response.data.price,
+            count: response.data.sellCount
+          };
+          product.count = response.data.count;
+          dispatch("setTradeResult", tradeResult);
+          router.push("/");
+        }
+
       }).catch(error => {
       util.notify.control(commit, error)
     });

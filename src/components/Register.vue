@@ -53,7 +53,9 @@
       createUser() {
         this.$store.dispatch("userRegister", this.user)
           .then(res => {
-            this.$router.push("/login");
+            if (res) {
+              this.$router.push("/login");
+            }
           })
       }
     }

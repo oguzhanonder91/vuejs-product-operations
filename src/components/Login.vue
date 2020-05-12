@@ -39,9 +39,11 @@
       login() {
         this.$store.dispatch("login", this.loginRequest)
           .then(res => {
-            this.$store.dispatch("getTradeResult");
-            this.$store.dispatch("initApp");
-            this.$router.push("/");
+            if (res) {
+              this.$store.dispatch("getTradeResult");
+              this.$store.dispatch("initApp");
+              this.$router.push("/");
+            }
           })
       },
     },
