@@ -22,12 +22,8 @@ export const getTradeResult = ({commit}) => {
 
 
 export const login = (vueContext, loginData) => {
-  let password = loginData.password;
-  let username = loginData.username;
-  let rndUser = Math.random().toString(36).substr(2, 6);
-  let rndPass = Math.random().toString(36).substr(2, 6);
-  loginData.password = btoa(btoa(password + util.rndData + rndPass));
-  loginData.username = btoa(btoa(username + util.rndData + rndUser));
+  loginData.password = util.randomCode(loginData.password);
+  loginData.username = util.randomCode(loginData.username);
 
   return util.service.post("auth/login", loginData)
     .then(response => {
@@ -60,6 +56,8 @@ export const userRegister = (vueContext, registerData) => {
       if (response) {
         return response;
       }
+    }).catch(error=>{
+      registerData = {};
     })
 };
 

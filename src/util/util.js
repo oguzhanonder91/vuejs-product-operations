@@ -17,6 +17,11 @@ export const notify = {
   }
 };
 
+export const randomCode =  function (data) {
+  let rndKey = Math.random().toString(36).substr(2, 6);
+  return btoa(btoa(data + rndData + rndKey));
+};
+
 export const service = {
 
   get(url){
