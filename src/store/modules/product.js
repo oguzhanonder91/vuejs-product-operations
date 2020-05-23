@@ -59,7 +59,7 @@ const actions = {
     })
   },
   sellProduct({commit, dispatch}, product) {
-    util.service.put("product/update", product)
+    util.service.put("product/sell", product)
       .then(response => {
         if (response) {
           let tradeResult = {
