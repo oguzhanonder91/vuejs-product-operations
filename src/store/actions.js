@@ -1,7 +1,7 @@
 import * as util from '../util/util'
 
 export const setTradeResult = ({state, commit}, tradeResult) => {
-  util.service.post("trade/create", tradeResult)
+  util.service.post("trade/createOrUpdate", tradeResult)
     .then(response => {
       if (response) {
         commit("updateTradeResult", response.data);
