@@ -26,7 +26,7 @@ const mutations = {
   }
 };
 
-// Mutationslar senkron çalışır.
+// Mutationslar senkron çalışır. Mutations da state de değişiklik yapılır.
 // Actionslar asenkron çalışıyor.
 
 const actions = {
