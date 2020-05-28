@@ -71,7 +71,7 @@ const routes = [
     component: () => System.import('../components/Login'),
     beforeEnter(to, from, next) {
      initSet();
-      if(store.getters.getIsLogin && localStorage.getItem(util.token)){
+      if(store.getters.getIsLogin && util.common.getToken()){
         next("/")
       }else{
         next()
@@ -91,7 +91,7 @@ const routes = [
 
 let controlLogin = (next) => {
   initSet();
-  if (!store.getters.getIsLogin && !localStorage.getItem(util.token)) {
+  if (!store.getters.getIsLogin && !util.common.getToken()) {
     next("/login")
   } else
     next()

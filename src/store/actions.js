@@ -17,7 +17,7 @@ export const getTradeResult = ({commit}) => {
         commit("updateTradeResult", response.data);
       }
     }).catch(error => {
-    util.notify.control(error)
+    util.common.control(error)
   })
 };
 
@@ -29,10 +29,7 @@ export const login = (vueContext, loginData) => {
   return util.service.post("auth/login", loginData)
     .then(response => {
       if (response) {
-        vueContext.commit("setIsLogin", true);
-        localStorage.setItem(util.token, response.data.token);
-        localStorage.setItem(util.expiry, response.data.expirationDate);
-        vueContext.dispatch("setTimeOutTimerExpiry", response.data.expirationDate);
+        util.common.loginSuccessfully(response.data);
         vueContext.dispatch("initApp");
         vueContext.dispatch("getTradeResult");
         router.push("/");
@@ -47,13 +44,11 @@ export const logout = (vueContext) => {
   return util.service.post("auth/logout")
     .then(res => {
       if (res) {
-        vueContext.commit("setIsLogin", false);
-        localStorage.removeItem(util.token);
-        localStorage.removeItem(util.expiry);
+        util.common.logoutSuccessfully();
         router.push("/login");
       }
-    }).catch(err=>{
-      util.notify.control(err);
+    }).catch(err => {
+      util.common.control(err);
     });
 };
 
@@ -75,20 +70,19 @@ export const setTimeOutTimerExpiry = (vueContext, expiry) => {
 }
 
 export const initIsLogin = (vueContext) => {
-  let obj= {};
+  let obj = {};
   obj.status = 401;
-  if (localStorage.getItem(util.token)) {
-    let now = new Date().getTime();
-    let expiry = localStorage.getItem(util.expiry);
-    if (now >= expiry) {
-     util.notify.control(obj);
+  if (util.common.getToken()) {
+    let result = util.common.calculateTime(localStorage.getItem(util.expiry));
+    if (result.now >= result.expiry) {
+      util.common.control(obj);
     } else {
-      let timer = expiry - now;
+      let timer = result.timer;
       vueContext.commit("setIsLogin", true);
       vueContext.dispatch("setTimeOutTimerExpiry", timer)
     }
   } else {
-    util.notify.control(obj);
+    util.common.control(obj);
   }
 };
 

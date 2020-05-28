@@ -11,8 +11,8 @@ Vue.use(VueResource);
 Vue.http.options.root = "http://localhost:8081/";
 
 Vue.http.interceptors.push((request, next) => {
-  if (store.state.isLogin != null && store.state.isLogin && localStorage.getItem(util.token)) {
-    request.headers.set('Authorization', 'Bearer ' + localStorage.getItem(util.token));
+  if (store.state.isLogin != null && store.state.isLogin && util.common.getToken()) {
+    request.headers.set('Authorization', 'Bearer ' + util.common.getToken());
   }
 })
 

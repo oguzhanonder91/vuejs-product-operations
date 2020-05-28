@@ -37,7 +37,7 @@ const actions = {
           commit("refreshProducts", response.data);
         }
       }).catch(error => {
-      util.notify.control(error)
+      util.common.control(error)
     })
   },
   saveProduct({dispatch, commit}, product) {
@@ -55,7 +55,7 @@ const actions = {
         }
 
       }).catch(error => {
-      util.notify.control(error)
+      util.common.control(error)
     })
   },
   sellProduct({commit, dispatch}, product) {
@@ -73,7 +73,7 @@ const actions = {
         }
 
       }).catch(error => {
-      util.notify.control(error)
+      util.common.control(error)
     });
   }
 }
