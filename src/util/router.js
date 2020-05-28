@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import store from '../store/store';
 import * as util from '../util/util';
 
-const ProductList = resolve  =>{
+/*const ProductList = resolve  =>{
   require.ensure(['../components/ProductList'] , () =>{
     resolve (require("../components/ProductList"))
   })
@@ -34,7 +34,7 @@ const Register = resolve  =>{
     resolve (require("../components/Register"))
   })
 }
-
+*/
 
 Vue.use(VueRouter);
 
@@ -44,7 +44,7 @@ const routes = [
   {
     path: "/",
     name: "ProductList",
-    component: ProductList,
+    component: () => System.import('../components/ProductList'),
     beforeEnter(to, from, next) {
       controlLogin(next);
     }
@@ -52,7 +52,7 @@ const routes = [
   {
     path: "/purchase",
     name: "ProductPurchase",
-    component: ProductPurchase,
+    component: () => System.import('../components/ProductPurchase'),
     beforeEnter(to, from, next) {
       controlLogin(next);
     }
@@ -60,7 +60,7 @@ const routes = [
   {
     path: "/sell",
     name: "ProductSell",
-    component: ProductSell,
+    component: () => System.import('../components/ProductSell'),
     beforeEnter(to, from, next) {
       controlLogin(next);
     }
@@ -68,22 +68,20 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: () => System.import('../components/Login'),
     beforeEnter(to, from, next) {
-      let isLogin = store.state.isLogin;
-      if (isLogin == null || !localStorage.getItem(util.token)) {
-        store.dispatch("initIsLogin")
-      }
-      if (store.state.isLogin) {
+     initSet();
+      if(store.getters.getIsLogin && localStorage.getItem(util.token)){
         next("/")
-      } else
+      }else{
         next()
+      }
     }
   },
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: () => System.import('../components/Register'),
   },
   {
     path: "*", redirect: "/",
@@ -92,15 +90,19 @@ const routes = [
 ];
 
 let controlLogin = (next) => {
-  let isLogin = store.state.isLogin;
-  if (isLogin == null || !localStorage.getItem(util.token)) {
-    store.dispatch("initIsLogin")
-  }
-  if (!store.state.isLogin) {
+  initSet();
+  if (!store.getters.getIsLogin && !localStorage.getItem(util.token)) {
     next("/login")
   } else
     next()
-}
+};
+
+let initSet = () =>{
+  let isLogin = store.getters.getIsLogin;
+  if (isLogin == null) {
+    store.dispatch("initIsLogin")
+  }
+};
 
 const router = new VueRouter({
   routes: routes,

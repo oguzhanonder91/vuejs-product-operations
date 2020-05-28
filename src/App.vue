@@ -19,10 +19,10 @@
       return {}
     },
     created() {
-      if (this.$store.state.isLogin == null) {
+      if (this.$store.getters.getIsLogin == null) {
         this.$store.dispatch("initIsLogin");
       }
-      if (this.$store.state.isLogin) {
+      if (this.$store.getters.getIsLogin) {
         this.$store.dispatch("getTradeResult");
         this.$store.dispatch("initApp");
       }

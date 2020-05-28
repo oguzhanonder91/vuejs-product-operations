@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$store.state.isLogin" class="container">
+  <div v-if="getIsLogin" class="container">
     <div class="loading" :style="isLoading">
       <div class="lds-ripple">
         <div></div>
@@ -38,6 +38,7 @@
 
 <script>
   import {productMixin} from '../util/productMixin';
+  import {mapGetters} from 'vuex';
 
   export default {
     name: "ProductPurchase",
@@ -67,6 +68,7 @@
           return true;
         }
       },
+      ...mapGetters(["getIsLogin"]),
     },
     beforeRouteLeave(to, from, next) {
       if ((this.product.title.length > 0 || this.product.description.length > 0 || this.product.price > 0 || this.product.count > 0) && !this.saveButtonClicked) {

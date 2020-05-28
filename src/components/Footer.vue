@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="this.$store.state.isLogin" class="navbar fixed-bottom  navbar-light" style="background-color: #e3f2fd;">
+  <nav v-if="getIsLogin" class="navbar fixed-bottom  navbar-light" style="background-color: #e3f2fd;">
     <span class="navbar-text mr-auto">
         <strong>Vuejs Çalışmaları</strong> | Oğuzhan ÖNDER
     </span>
@@ -23,7 +23,7 @@
 
   export default {
     name: "Footer",
-    computed: mapGetters(["getTradeResult"])
+    computed: mapGetters(["getTradeResult","getIsLogin"])
   }
 </script>
 

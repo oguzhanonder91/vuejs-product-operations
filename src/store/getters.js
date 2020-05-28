@@ -5,3 +5,7 @@ export const getTradeResult = (state) => {
    balance : state.balance
  }
 };
+
+export const getIsLogin = (state) =>{
+  return state.isLogin;
+}

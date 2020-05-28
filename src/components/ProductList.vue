@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$store.state.isLogin" class="container">
+  <div v-if="getIsLogin" class="container">
     <div class="row">
       <div class="col-12 mb-5 card mt-5 shadow">
         <div class="card-body">
@@ -43,7 +43,7 @@
   export default {
     name: "ProductList",
     computed: {
-      ...mapGetters(["getProductList"]),
+      ...mapGetters(["getProductList","getIsLogin"]),
     },
     methods: {
       getCountClass(count) {

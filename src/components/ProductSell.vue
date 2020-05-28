@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.$store.state.isLogin" class="container">
+  <div v-if="getIsLogin" class="container">
     <div class="loading" :style="isLoading">
       <div class="lds-ripple">
         <div></div>
@@ -63,7 +63,7 @@
       }
     },
     computed: {
-      ...mapGetters(["getProductList"]),
+      ...mapGetters(["getProductList","getIsLogin"]),
       saveEnabled() {
         if (this.sellCount > 0 && this.selected != null) {
           return false;

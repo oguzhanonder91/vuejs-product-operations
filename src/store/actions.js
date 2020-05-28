@@ -1,4 +1,5 @@
-import * as util from '../util/util'
+import * as util from '../util/util';
+import router from '../util/router';
 
 export const setTradeResult = ({state, commit}, tradeResult) => {
   util.service.post("trade/createOrUpdate", tradeResult)
@@ -16,7 +17,7 @@ export const getTradeResult = ({commit}) => {
         commit("updateTradeResult", response.data);
       }
     }).catch(error => {
-    util.notify.control(commit, error)
+    util.notify.control(error)
   })
 };
 
@@ -30,7 +31,11 @@ export const login = (vueContext, loginData) => {
       if (response) {
         vueContext.commit("setIsLogin", true);
         localStorage.setItem(util.token, response.data.token);
-        return response;
+        localStorage.setItem(util.expiry, response.data.expirationDate);
+        vueContext.dispatch("setTimeOutTimerExpiry", response.data.expirationDate);
+        vueContext.dispatch("initApp");
+        vueContext.dispatch("getTradeResult");
+        router.push("/");
       }
     }).catch(error => {
       loginData.password = null;
@@ -44,10 +49,12 @@ export const logout = (vueContext) => {
       if (res) {
         vueContext.commit("setIsLogin", false);
         localStorage.removeItem(util.token);
-        return res;
+        localStorage.removeItem(util.expiry);
+        router.push("/login");
       }
+    }).catch(err=>{
+      util.notify.control(err);
     });
-
 };
 
 export const userRegister = (vueContext, registerData) => {
@@ -56,15 +63,32 @@ export const userRegister = (vueContext, registerData) => {
       if (response) {
         return response;
       }
-    }).catch(error=>{
+    }).catch(error => {
       registerData = {};
     })
 };
 
+export const setTimeOutTimerExpiry = (vueContext, expiry) => {
+  setTimeout(() => {
+    vueContext.dispatch("logout");
+  }, expiry);
+}
+
 export const initIsLogin = (vueContext) => {
+  let obj= {};
+  obj.status = 401;
   if (localStorage.getItem(util.token)) {
-    vueContext.commit("setIsLogin", true)
+    let now = new Date().getTime();
+    let expiry = localStorage.getItem(util.expiry);
+    if (now >= expiry) {
+     util.notify.control(obj);
+    } else {
+      let timer = expiry - now;
+      vueContext.commit("setIsLogin", true);
+      vueContext.dispatch("setTimeOutTimerExpiry", timer)
+    }
   } else {
-    vueContext.commit("setIsLogin", false)
+    util.notify.control(obj);
   }
 };
+
