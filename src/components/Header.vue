@@ -4,7 +4,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/purchase" class="nav-link">Ürün İşlemleri</router-link>
+          <router-link to="/purchase" class="nav-link">Ürün Girişi</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/sell" class="nav-link">Ürün Çıkışı</router-link>

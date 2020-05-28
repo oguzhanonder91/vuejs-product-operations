@@ -17,7 +17,7 @@
           </div>
           <div class="form-group">
             <label>Adet</label>
-            <input type="number" class="form-control" v-model="product.count" placeholder="Ürün adetini giriniz..">
+            <input type="number" class="form-control" v-model="product.total" placeholder="Ürün adetini giriniz..">
           </div>
           <div class="form-group">
             <label>Fiyat</label>
@@ -47,8 +47,9 @@
       return {
         product: {
           title: "",
-          count: null,
+          total: null,
           price: null,
+          remaining : null,
           description: ""
         },
         saveButtonClicked: false
@@ -57,12 +58,13 @@
     methods: {
       saveProduct() {
         this.saveButtonClicked = true;
+        this.product.remaining = this.product.total;
         this.$store.dispatch("saveProduct", this.product);
       }
     },
     computed: {
       saveEnabled() {
-        if (this.product.title.length > 0 && this.product.description.length > 0 && this.product.price > 0 && this.product.count > 0) {
+        if (this.product.title.length > 0 && this.product.description.length > 0 && this.product.price > 0 && this.product.total > 0) {
           return false;
         } else {
           return true;
@@ -71,7 +73,7 @@
       ...mapGetters(["getIsLogin"]),
     },
     beforeRouteLeave(to, from, next) {
-      if ((this.product.title.length > 0 || this.product.description.length > 0 || this.product.price > 0 || this.product.count > 0) && !this.saveButtonClicked) {
+      if ((this.product.title.length > 0 || this.product.description.length > 0 || this.product.price > 0 || this.product.total > 0) && !this.saveButtonClicked) {
         if (confirm("Kaydedilmemiş veriler var . Çıkmak İstediğinizden emin misiniz ? ")) {
           next()
         } else {

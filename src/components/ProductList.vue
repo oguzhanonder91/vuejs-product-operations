@@ -11,16 +11,18 @@
             <th>Ürün Adı</th>
             <th>Kalan Adet</th>
             <th>Satılan Adet</th>
-            <th>Fiyat</th>
+            <th>Alış Fiyatı</th>
+            <th>Kar / Zarar</th>
             <th>Açıklama</th>
             </thead>
             <tbody>
             <tr v-for="product in getProductList">
               <td class="align-middle text-center"><span class="badge badge-info"> {{product.id}} </span></td>
               <td class="align-middle text-center"> {{product.title}}</td>
-              <td class="align-middle text-center" :class="getCountClass(product.count)"> {{product.count}}</td>
+              <td class="align-middle text-center" :class="getCountClass(product.remaining)"> {{product.remaining}}</td>
               <td class="align-middle text-center"> {{product.sellCount}}</td>
               <td style="width: 120px;"> {{product.price | currency}}</td>
+              <td style="width: 120px;" :class="getCountClass(product.profit)"> {{product.profit | currency}}</td>
               <td class="align-middle"> {{product.description}}</td>
             </tr>
             </tbody>

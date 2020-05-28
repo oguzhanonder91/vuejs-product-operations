@@ -48,7 +48,7 @@ const actions = {
           let tradeResult = {
             purchase: response.data.price,
             sale: 0,
-            count: response.data.count
+            count: response.data.total
           };
           dispatch("setTradeResult", tradeResult);
           router.push("/");
@@ -59,15 +59,19 @@ const actions = {
     })
   },
   sellProduct({commit, dispatch}, product) {
+    let sellCount = product.sellCount;
     util.service.put("product/sell", product)
       .then(response => {
         if (response) {
           let tradeResult = {
             purchase: 0,
-            sale: response.data.price,
-            count: response.data.sellCount
+            sale: response.data.sellPrice,
+            count: sellCount
           };
-          product.count = response.data.count;
+          product.remaining = response.data.remaining;
+          product.sellCount = response.data.sellCount;
+          product.sellPrice =  response.data.sellPrice;
+          product.profit = response.data.profit;
           dispatch("setTradeResult", tradeResult);
           router.push("/");
         }
