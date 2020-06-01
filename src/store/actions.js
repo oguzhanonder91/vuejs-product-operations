@@ -32,7 +32,7 @@ export const login = (vueContext, loginData) => {
         util.common.loginSuccessfully(response.data);
         vueContext.dispatch("initApp");
         vueContext.dispatch("getTradeResult");
-        router.push("/");
+        router.push("/dashboard");
       }
     }).catch(error => {
       loginData.password = null;

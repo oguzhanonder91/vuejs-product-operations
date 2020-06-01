@@ -1,37 +1,60 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-6 offset-3 pt-3 card mt-5 shadow">
-        <div class="card-body">
-          <h3>Kayıt Ol</h3>
-          <hr>
-          <div class="form-group">
-            <label>Ad</label>
-            <input type="text" v-model="user.name" class="form-control" placeholder="İsim Giriniz">
-          </div>
-          <div class="form-group">
-            <label>Soyad</label>
-            <input type="text" v-model="user.surname" class="form-control" placeholder="Soyisim Giriniz">
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="text" v-model="user.email" class="form-control" placeholder="Mail Adresininizi Giriniz">
-          </div>
-          <div class="form-group">
-            <label>Şifre</label>
-            <input type="password" v-model="user.password" class="form-control" placeholder="Şifrenizi Giriniz">
-          </div>
-          <div class="form-group">
-            <label>Şifre Tekrar</label>
-            <input type="password" v-model="user.matchingPassword" class="form-control"
-                   placeholder="Şifrenizi Tekrar Giriniz">
-          </div>
-          <hr>
-          <button class="btn btn-primary" @click="createUser">Kayıt Ol</button>
-        </div>
-      </div>
-    </div>
+  <div class="d-flex align-items-center min-vh-100">
+    <CContainer fluid>
+      <CRow class="justify-content-center">
+        <CCol md="6">
+          <CCard class="mx-4 mb-0">
+            <CCardBody class="p-4">
+              <CForm>
+                <h1>Register</h1>
+                <p class="text-muted">Create your account</p>
+                <CInput
+                  v-model="user.name"
+                  placeholder="Name"
+                  autocomplete="name"
+                >
+                  <template #prepend-content><CIcon name="cil-user"/></template>
+                </CInput>
+                <CInput
+                  v-model="user.surname"
+                  placeholder="Surname"
+                  autocomplete="surname"
+                >
+                  <template #prepend-content><CIcon name="cil-user"/></template>
+                </CInput>
+                <CInput
+                  v-model="user.email"
+                  placeholder="Email"
+                  autocomplete="email"
+                  prepend="@"
+                />
+                <CInput
+                  v-model="user.password"
+                  placeholder="Password"
+                  type="password"
+                  autocomplete="new-password"
+                >
+                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                </CInput>
+                <CInput
+                  v-model="user.matchingPassword"
+                  placeholder="Repeat password"
+                  type="password"
+                  autocomplete="new-password"
+                  class="mb-4"
+                >
+                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                </CInput>
+                <CButton color="success" @click="createUser" block>Create Account</CButton>
+                <CButton color="info" @click="goToLoginPage" block>Go to Login Page</CButton>
+              </CForm>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+    </CContainer>
   </div>
+
 </template>
 
 <script>
@@ -50,6 +73,9 @@
       }
     },
     methods: {
+      goToLoginPage(){
+        this.$router.push("/login");
+      },
       createUser() {
         this.$store.dispatch("userRegister", this.user)
           .then(res => {
@@ -63,8 +89,5 @@
 </script>
 
 <style scoped>
-  .container {
-    margin-top: 20px;
-    padding: 20px;
-  }
+
 </style>

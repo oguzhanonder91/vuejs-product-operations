@@ -13,7 +13,9 @@ Vue.use(Vuex);
     sale: 0.0,
     balance: 0.0,
     isLogin : null,
-    user : null
+    user : null,
+    sidebarShow: 'responsive',
+    sidebarMinimize: false
   },
   getters: getters,
   mutations: mutations,

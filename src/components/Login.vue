@@ -1,27 +1,58 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-6 offset-3 pt-3 card mt-5 shadow">
-        <div class="card-body">
-          <h3>Login</h3>
-          <hr>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="text" v-model="loginRequest.username" class="form-control"
-                   placeholder="Mail Adresininizi Giriniz">
-          </div>
-          <div class="form-group">
-            <label>Şifre</label>
-            <input type="password" v-model="loginRequest.password" class="form-control" placeholder="Şifrenizi Giriniz">
-          </div>
-          <hr>
 
-          <button class="btn btn-primary" @click="login">Giriş Yap</button>
-          <router-link style="padding-left: 5px" to="/register">Kayıt Ol</router-link>
-        </div>
-      </div>
-    </div>
-  </div>
+  <CContainer class="d-flex content-center min-vh-100">
+    <CRow>
+      <CCol>
+        <CCardGroup>
+          <CCard class="p-4">
+            <CCardBody>
+              <CForm>
+                <h1>Login</h1>
+                <p class="text-muted">Sign In to your account</p>
+                <CInput
+                  v-model="loginRequest.username"
+                  placeholder="Email"
+                  autocomplete="email"
+                >
+                  <template #prepend-content><CIcon name="cil-user"/></template>
+                </CInput>
+                <CInput
+                  v-model="loginRequest.password"
+                  placeholder="Password"
+                  type="password"
+                  autocomplete="current-password"
+                >
+                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                </CInput>
+                <CRow>
+                  <CCol col="6" class="text-left">
+                    <CButton color="primary" class="px-4" @click="login">Login</CButton>
+                  </CCol>
+                </CRow>
+              </CForm>
+            </CCardBody>
+          </CCard>
+          <CCard
+            color="primary"
+            text-color="white"
+            class="text-center py-5 d-sm-down-none"
+            body-wrapper
+          >
+            <h2>Sign up</h2>
+            <p>If you do not have an account yet, you can create an account by clicking the link below.</p>
+            <CButton
+              color="primary"
+              class="active mt-3"
+              @click="goToRegister"
+            >
+              Register Now!
+            </CButton>
+          </CCard>
+        </CCardGroup>
+      </CCol>
+    </CRow>
+  </CContainer>
+
 </template>
 
 <script>
@@ -39,6 +70,9 @@
       login() {
         this.$store.dispatch("login", this.loginRequest)
       },
+      goToRegister(){
+        this.$router.push("/register");
+      }
     },
   }
 </script>

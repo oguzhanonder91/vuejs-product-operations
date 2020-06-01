@@ -1,20 +1,14 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <transition name="fade" mode="out-in">
-      <RouterView></RouterView>
-    </transition>
-    <Footer></Footer>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import Header from './components/Header'
-  import Footer from './components/Footer'
+
 
   export default {
     name: 'app',
-    components: {Header, Footer},
     data() {
       return {}
     },
@@ -31,21 +25,7 @@
   }
 </script>
 
-<style>
-  .fade-enter {
-    opacity: 0;
-  }
-
-  .fade-enter-active {
-    transition: opacity .3s ease-out;
-  }
-
-  .fade-leave {
-
-  }
-
-  .fade-leave-active {
-    transition: opacity .3s ease-out;
-
-  }
+<style lang="scss">
+  // Import Main styles for this application
+  @import 'assets/scss/style';
 </style>
