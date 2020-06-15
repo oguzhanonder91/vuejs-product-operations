@@ -28,15 +28,15 @@ export const login = (vueContext, loginData) => {
 
   return util.service.post("auth/login", loginData)
     .then(response => {
+      loginData = {};
       if (response) {
         util.common.loginSuccessfully(response.data);
         vueContext.dispatch("initApp");
         vueContext.dispatch("getTradeResult");
-        router.push("/dashboard");
+        util.common.route("dashboard");
       }
     }).catch(error => {
-      loginData.password = null;
-      loginData.username = null;
+      loginData = {};
     });
 };
 
@@ -45,7 +45,7 @@ export const logout = (vueContext) => {
     .then(res => {
       if (res) {
         util.common.logoutSuccessfully();
-        router.push("/login");
+        util.common.route("login");
       }
     }).catch(err => {
       util.common.control(err);

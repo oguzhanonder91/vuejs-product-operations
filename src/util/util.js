@@ -12,7 +12,7 @@ export const common = {
     if (error.status === 401) {
       this.logoutSuccessfully();
       if (!store.getters.getIsLogin) {
-        router.push("/login");
+        this.route("login");
       }
     }
   },
@@ -44,6 +44,12 @@ export const common = {
     result.timer = timer;
     result.expiry = expiryVal;
     return result ;
+  },
+  route (path){
+    try {
+      router.push("/"+path)
+    }catch (e) {
+    }
   }
 };
 

@@ -56,6 +56,9 @@
 </template>
 
 <script>
+
+  import * as util from '../util/util';
+
   export default {
     name: "Login",
     data() {
@@ -71,7 +74,7 @@
         this.$store.dispatch("login", this.loginRequest)
       },
       goToRegister(){
-        this.$router.push("/register");
+        util.common.route("register");
       }
     },
   }

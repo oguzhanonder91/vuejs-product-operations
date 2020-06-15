@@ -51,7 +51,7 @@ const actions = {
             count: response.data.total
           };
           dispatch("setTradeResult", tradeResult);
-          router.push("/");
+          util.common.route("");
         }
 
       }).catch(error => {
@@ -73,7 +73,7 @@ const actions = {
           product.sellPrice =  response.data.sellPrice;
           product.profit = response.data.profit;
           dispatch("setTradeResult", tradeResult);
-          router.push("/");
+          util.common.route("");
         }
 
       }).catch(error => {

@@ -58,6 +58,8 @@
 </template>
 
 <script>
+  import * as util from '../util/util';
+
   export default {
     name: "Register",
     data() {
@@ -74,13 +76,13 @@
     },
     methods: {
       goToLoginPage(){
-        this.$router.push("/login");
+       util.common.route("login");
       },
       createUser() {
         this.$store.dispatch("userRegister", this.user)
           .then(res => {
             if (res) {
-              this.$router.push("/login");
+              util.common.route("login");
             }
           })
       }
