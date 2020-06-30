@@ -1,4 +1,3 @@
-import router from '../../util/router';
 import * as util from "../../util/util";
 
 const state = {
@@ -30,7 +29,7 @@ const mutations = {
 // Actionslar asenkron çalışıyor.
 
 const actions = {
-  initApp({commit}) {
+  getAllProduct({commit}) {
     util.service.get("product/all")
       .then(response => {
         if (response) {
@@ -51,7 +50,7 @@ const actions = {
             count: response.data.total
           };
           dispatch("setTradeResult", tradeResult);
-          util.common.route("");
+          //util.common.routePush("");
         }
 
       }).catch(error => {
@@ -73,7 +72,7 @@ const actions = {
           product.sellPrice =  response.data.sellPrice;
           product.profit = response.data.profit;
           dispatch("setTradeResult", tradeResult);
-          util.common.route("");
+          util.common.routePush("");
         }
 
       }).catch(error => {

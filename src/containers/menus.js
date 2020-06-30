@@ -19,12 +19,12 @@ export default [
         icon: 'cil-puzzle',
         route: '/product',
         items: [
-          {
+         /* {
             name: 'Ürün Listesi',
             to: '/product/productList'
-          },
+          },*/
           {
-            name: 'Ürün Girişi',
+            name: 'Ürün Listesi',
             to: '/product/purchase'
           },
           {

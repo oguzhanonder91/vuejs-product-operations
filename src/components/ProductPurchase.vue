@@ -1,82 +1,218 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-6 offset-3 pt-3 card mt-5 shadow">
-        <div class="card-body">
-          <h3>Ürün İşlemleri</h3>
-          <hr>
-          <div class="form-group">
-            <label>Ürün Adı</label>
-            <input type="text" class="form-control" v-model="product.title" placeholder="Ürün adını giriniz..">
-          </div>
-          <div class="form-group">
-            <label>Adet</label>
-            <input type="number" class="form-control" v-model="product.total" placeholder="Ürün adetini giriniz..">
-          </div>
-          <div class="form-group">
-            <label>Fiyat</label>
-            <input type="number" class="form-control" v-model="product.price" placeholder="Ürün fiyatı giriniz..">
-          </div>
-          <div class="form-group">
-            <label>Açıklama</label>
-            <textarea cols="30" rows="5" placeholder="Ürüne ait bir açıklama giriniz..."
-                      v-model="product.description" class="form-control"></textarea>
-          </div>
-          <hr>
-          <button @click="saveProduct" :disabled="saveEnabled" class="btn btn-primary">Kaydet</button>
-        </div>
+  <div>
+    <h3 id ="productOperations">Ürün İşlemleri</h3>
+    <CButton id="createButton"
+      @click="createOperation"
+      color="primary"
+    >
+      Yeni Kayıt
+    </CButton>
+    <MyModal
+      title="Kayıt Ekranı"
+      ok="Kaydet"
+      cancel="İptal"
+      :show.sync="modalShow"
+      :processType= "process"
+      @update:show="saveOrUpdateProduct"
+    >
+      <div>
+        <CRow>
+          <CCol sm="12">
+            <CInput
+              label="Adı"
+              placeholder="Ürün Adı Giriniz"
+              v-model="product.title"
+            />
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CInput
+              label="Adeti"
+              placeholder="Ürün Adeti Giriniz"
+              v-model="product.total"
+              type="number"
+            />
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CInput
+              label="Fiyatı"
+              placeholder="Ürün Fiyatı Giriniz"
+              v-model="product.price"
+              type="number"
+            />
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CTextarea
+              label="Açıklama"
+              placeholder="Ürün Açıklama Giriniz"
+              v-model="product.description"
+            />
+          </CCol>
+        </CRow>
       </div>
-    </div>
+    </MyModal>
+    <MyModal
+      title="Silme Onayı"
+      ok="Sil"
+      cancel="İptal"
+      :show.sync="modalDeleteShow"
+      processType= "delete"
+      @update:show="deleteProduct"
+    >
+      <h3>{{product.title}}</h3> ürününü silmek istiyor musunuz ?
+    </MyModal>
+
+    <CCardBody
+      color="white">
+      <CDataTable
+        :items="getProductList"
+        :fields="fields"
+        column-filter
+        :table-filter="{
+      label : 'Arama',
+      placeholder : 'Arama yapılacak kelime ....'
+      }"
+        :items-per-page-select="{
+       label : 'Sayfada gösterilecek adet : '
+      }"
+        :items-per-page="5"
+        hover
+        sorter
+        striped
+        bordered
+        small
+        fixed
+        pagination
+      >
+
+        <template #show_details="{item, index}">
+          <td class="py-2">
+            <CButton
+              color="primary"
+              variant="outline"
+              square
+              size="sm"
+              @click="editOperation(item)"
+            >
+              Güncelle
+            </CButton>
+          </td>
+          <td class="py-2">
+            <CButton
+              color="danger"
+              variant="outline"
+              square
+              size="sm"
+              @click="deleteOperation(item)"
+            >
+              Sil
+            </CButton>
+          </td>
+        </template>
+      </CDataTable>
+    </CCardBody>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex';
+  import MyModal from "./MyModal";
+
+  const fields = [
+
+    {key: 'title', label: 'Ürün Adı', _style: 'width:40%'},
+    {key: 'remaining', label: "Kalan Miktar"},
+    {key: 'sellCount', label: "Satılan Miktar",},
+    {key: 'price', label: "Fiyat",},
+    {key: 'profit', label: "Kar / Zarar"},
+    {key: 'description', label: "Açıklama", _style: 'width:50%;'},
+    {
+      key: 'show_details',
+      label: 'İşlemler',
+      _style: 'width:1%',
+      sorter: false,
+      filter: false
+    }
+  ]
 
   export default {
     name: "ProductPurchase",
+    components: {MyModal},
     data() {
       return {
         product: {
           title: "",
           total: null,
           price: null,
-          remaining : null,
+          remaining: null,
           description: ""
         },
-        saveButtonClicked: false
+        modalShow: false,
+        modalDeleteShow : false,
+        process : 'create',
+        fields,
       }
     },
     methods: {
       saveProduct() {
-        this.saveButtonClicked = true;
         this.product.remaining = this.product.total;
         this.$store.dispatch("saveProduct", this.product);
-      }
-    },
-    computed: {
-      saveEnabled() {
-        if (this.product.title.length > 0 && this.product.description.length > 0 && this.product.price > 0 && this.product.total > 0) {
-          return false;
-        } else {
-          return true;
+      },
+      updateProduct(){
+
+      },
+      deleteProduct(value,e,type) {
+        if (type === "delete") {
+          // actions ile servera git
         }
       },
-    },
-    beforeRouteLeave(to, from, next) {
-      if ((this.product.title.length > 0 || this.product.description.length > 0 || this.product.price > 0 || this.product.total > 0) && !this.saveButtonClicked) {
-        if (confirm("Kaydedilmemiş veriler var . Çıkmak İstediğinizden emin misiniz ? ")) {
-          next()
-        } else {
-          next(false);
+      saveOrUpdateProduct(value, e, type) {
+        if (type === "create") {
+          this.saveProduct();
         }
-      } else {
-        next();
-      }
-    }
+      },
+      editOperation(value) {
+        this.product = value;
+        this.modalShow = true;
+        this.process = 'update'
+      },
+      createOperation() {
+        this.product = {};
+        this.modalShow = true;
+        this.process = 'create'
+      },
+      deleteOperation(value) {
+        this.product = value;
+        this.modalDeleteShow = true;
+      },
+    },
+    created() {
+      this.$store.dispatch("getAllProduct");
+    },
+    computed: {
+      ...mapGetters(["getProductList", "getIsLogin"]),
+      saveEnabled() {
+        /* if (this.product.title.length > 0 && this.product.description.length > 0 && this.product.price > 0 && this.product.total > 0) {
+           return false;
+         } else {
+           return true;
+         }*/
+      },
+    },
   }
 </script>
 
 <style scoped>
-
+#createButton {
+  margin-bottom: 5px !important;
+}
+#productOperations {
+  margin-bottom: 15px !important;
+  margin-top: -15px !important;
+}
 </style>

@@ -60,7 +60,7 @@ const routes = [
       },
       {
         path: 'product',
-        redirect: '/product/productList',
+        redirect: '/product/purchase',
         name: 'Product',
         component: {
           render(c) {
@@ -68,14 +68,14 @@ const routes = [
           }
         },
         children: [
-          {
+         /* {
             path: "productList",
             name: "ProductList",
             component: () => System.import('../components/ProductList'),
             beforeEnter(to, from, next) {
               controlLogin(next);
             }
-          },
+          },*/
           {
             path: "purchase",
             name: "ProductPurchase",

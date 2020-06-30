@@ -1,5 +1,4 @@
 import * as util from '../util/util';
-import router from '../util/router';
 
 export const setTradeResult = ({state, commit}, tradeResult) => {
   util.service.post("trade/createOrUpdate", tradeResult)
@@ -31,9 +30,9 @@ export const login = (vueContext, loginData) => {
       loginData = {};
       if (response) {
         util.common.loginSuccessfully(response.data);
-        vueContext.dispatch("initApp");
+        //vueContext.dispatch("initApp");
         vueContext.dispatch("getTradeResult");
-        util.common.route("dashboard");
+        util.common.routePush("dashboard");
       }
     }).catch(error => {
       loginData = {};
@@ -45,7 +44,7 @@ export const logout = (vueContext) => {
     .then(res => {
       if (res) {
         util.common.logoutSuccessfully();
-        util.common.route("login");
+        util.common.routePush("login");
       }
     }).catch(err => {
       util.common.control(err);

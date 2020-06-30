@@ -76,13 +76,13 @@
     },
     methods: {
       goToLoginPage(){
-       util.common.route("login");
+        util.common.routePush("login");
       },
       createUser() {
         this.$store.dispatch("userRegister", this.user)
           .then(res => {
             if (res) {
-              util.common.route("login");
+              util.common.routePush("login");
             }
           })
       }

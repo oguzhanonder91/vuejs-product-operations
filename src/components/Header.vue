@@ -1,6 +1,5 @@
 <template>
   <nav v-if="getIsLogin" class="navbar navbar-expand-lg navbar-dark" style="background-color: #563F7A">
-    <router-link to="/productList" class="navbar-brand">Ürün Listesi</router-link>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">

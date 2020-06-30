@@ -74,7 +74,7 @@
         this.$store.dispatch("login", this.loginRequest)
       },
       goToRegister(){
-        util.common.route("register");
+       util.common.routePush("register");
       }
     },
   }
