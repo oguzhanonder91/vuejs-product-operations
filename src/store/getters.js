@@ -9,3 +9,7 @@ export const getTradeResult = (state) => {
 export const getIsLogin = (state) =>{
   return state.isLogin;
 }
+
+export const getIsLoading = (state) =>{
+  return state.isLoading;
+}

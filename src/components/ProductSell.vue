@@ -1,5 +1,5 @@
 <template>
-  <div v-if="getIsLogin" class="container">
+  <div class="container">
     <div class="loading" :style="isLoading">
       <div class="lds-ripple">
         <div></div>
@@ -68,7 +68,7 @@
       }
     },
     computed: {
-      ...mapGetters(["getProductList", "getIsLogin"]),
+      ...mapGetters(["getProductList"]),
       saveEnabled() {
         if (this.sellCount > 0 && this.selected != null && this.sellPrice > 0) {
           return false;

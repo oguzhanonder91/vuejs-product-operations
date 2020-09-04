@@ -68,14 +68,14 @@ const routes = [
           }
         },
         children: [
-         /* {
-            path: "productList",
-            name: "ProductList",
-            component: () => System.import('../components/ProductList'),
-            beforeEnter(to, from, next) {
-              controlLogin(next);
-            }
-          },*/
+          /* {
+             path: "productList",
+             name: "ProductList",
+             component: () => System.import('../components/ProductList'),
+             beforeEnter(to, from, next) {
+               controlLogin(next);
+             }
+           },*/
           {
             path: "purchase",
             name: "ProductPurchase",
@@ -96,7 +96,14 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: "/user/registrationConfirm",
+    name: "UserConfirmation",
+    component: () => System.import('../components/UserConfirmation'),
+    children: [
+      { path: ":param" , component : () => System.import('../components/UserConfirmation')}
+    ]
+  },
   {
     path: "/login",
     name: "Login",

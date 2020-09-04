@@ -32,7 +32,7 @@
 
   export default {
     name: "Trade",
-    computed: mapGetters(["getTradeResult", "getIsLogin"])
+    computed: mapGetters(["getTradeResult"])
 
   }
 </script>

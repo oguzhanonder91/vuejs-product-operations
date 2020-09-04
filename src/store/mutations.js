@@ -9,6 +9,10 @@ export const setIsLogin = (state, val) => {
   state.isLogin = val;
 };
 
+export const setIsLoading= (state, val) => {
+  state.isLoading = val;
+};
+
 export const toggleSidebarDesktop = (state) => {
   const sidebarOpened = [true, 'responsive'].includes(state.sidebarShow);
   state.sidebarShow = sidebarOpened ? false : 'responsive'

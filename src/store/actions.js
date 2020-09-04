@@ -10,10 +10,23 @@ export const setTradeResult = ({state, commit}, tradeResult) => {
 };
 
 export const getTradeResult = ({commit}) => {
+  commit("setIsLoading", true);
   util.service.get("trade/result")
     .then(response => {
       if (response) {
         commit("updateTradeResult", response.data);
+      }
+      commit("setIsLoading", false);
+    }).catch(error => {
+    util.common.control(error)
+  })
+};
+
+export const registerConfirm = (vueContext,param) => {
+  return util.service.get("user/registrationConfirm/" + param)
+    .then(response => {
+      if (response) {
+        return response;
       }
     }).catch(error => {
     util.common.control(error)
@@ -24,7 +37,7 @@ export const getTradeResult = ({commit}) => {
 export const login = (vueContext, loginData) => {
   loginData.password = util.randomCode(loginData.password);
   loginData.username = util.randomCode(loginData.username);
-
+  vueContext.commit("setIsLoading", true);
   return util.service.post("auth/login", loginData)
     .then(response => {
       loginData = {};
@@ -34,6 +47,7 @@ export const login = (vueContext, loginData) => {
         vueContext.dispatch("getTradeResult");
         util.common.routePush("dashboard");
       }
+      vueContext.commit("setIsLoading", false);
     }).catch(error => {
       loginData = {};
     });

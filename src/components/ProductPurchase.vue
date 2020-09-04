@@ -195,7 +195,7 @@
       this.$store.dispatch("getAllProduct");
     },
     computed: {
-      ...mapGetters(["getProductList", "getIsLogin"]),
+      ...mapGetters(["getProductList"]),
       saveEnabled() {
         /* if (this.product.title.length > 0 && this.product.description.length > 0 && this.product.price > 0 && this.product.total > 0) {
            return false;

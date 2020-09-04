@@ -12,7 +12,7 @@ export const common = {
     if (error.status === 401) {
       this.logoutSuccessfully();
       if (!store.getters.getIsLogin) {
-        router.push("/login");
+        this.routePush("login");
       }
     }
   },

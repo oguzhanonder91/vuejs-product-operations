@@ -32,22 +32,15 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
-
   export default {
     name: 'TheHeaderDropdownAccnt',
     data() {
-      return {
-        itemsCount: 42
-      }
+      return {}
     },
     methods: {
       logout() {
         this.$store.dispatch("logout");
       }
-    },
-    computed: {
-      ...mapGetters(["getIsLogin"]),
     }
   }
 </script>

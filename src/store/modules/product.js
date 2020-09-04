@@ -30,16 +30,19 @@ const mutations = {
 
 const actions = {
   getAllProduct({commit}) {
+    commit("setIsLoading" , true);
     util.service.get("product/all")
       .then(response => {
         if (response) {
           commit("refreshProducts", response.data);
         }
+        commit("setIsLoading" , false);
       }).catch(error => {
       util.common.control(error)
     })
   },
   saveProduct({dispatch, commit}, product) {
+    commit("setIsLoading" , true);
     util.service.post("product/create", product)
       .then((response) => {
         if (response) {
@@ -50,6 +53,7 @@ const actions = {
             count: response.data.total
           };
           dispatch("setTradeResult", tradeResult);
+          commit("setIsLoading" , false);
           //util.common.routePush("");
         }
 
