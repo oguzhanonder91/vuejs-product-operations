@@ -9,8 +9,12 @@ export const setIsLogin = (state, val) => {
   state.isLogin = val;
 };
 
-export const setIsLoading= (state, val) => {
+export const setIsLoading = (state, val) => {
   state.isLoading = val;
+};
+
+export const setMyToast = (state, val) => {
+  state.myToast = val;
 };
 
 export const toggleSidebarDesktop = (state) => {

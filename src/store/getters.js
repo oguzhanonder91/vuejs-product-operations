@@ -13,3 +13,7 @@ export const getIsLogin = (state) =>{
 export const getIsLoading = (state) =>{
   return state.isLoading;
 }
+
+export const getMyToast = (state)=>{
+  return state.myToast;
+}

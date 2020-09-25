@@ -30,19 +30,18 @@ const mutations = {
 
 const actions = {
   getAllProduct({commit}) {
-    commit("setIsLoading" , true);
     util.service.get("product/all")
       .then(response => {
         if (response) {
           commit("refreshProducts", response.data);
         }
-        commit("setIsLoading" , false);
+        util.common.control(response);
       }).catch(error => {
       util.common.control(error)
     })
   },
   saveProduct({dispatch, commit}, product) {
-    commit("setIsLoading" , true);
+    let toast = {};
     util.service.post("product/create", product)
       .then((response) => {
         if (response) {
@@ -53,9 +52,9 @@ const actions = {
             count: response.data.total
           };
           dispatch("setTradeResult", tradeResult);
-          commit("setIsLoading" , false);
-          //util.common.routePush("");
         }
+        toast = util.common.prepareToast("Bilgi", util.toastType.SUCCESS, "İşlem Başarılı Şekilde Gerçekleşti.", true);
+        util.common.control(response, toast);
 
       }).catch(error => {
       util.common.control(error)
@@ -73,7 +72,7 @@ const actions = {
           };
           product.remaining = response.data.remaining;
           product.sellCount = response.data.sellCount;
-          product.sellPrice =  response.data.sellPrice;
+          product.sellPrice = response.data.sellPrice;
           product.profit = response.data.profit;
           dispatch("setTradeResult", tradeResult);
           util.common.routePush("");

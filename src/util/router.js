@@ -101,7 +101,7 @@ const routes = [
     name: "UserConfirmation",
     component: () => System.import('../components/UserConfirmation'),
     children: [
-      { path: ":param" , component : () => System.import('../components/UserConfirmation')}
+      {path: ":param", component: () => System.import('../components/UserConfirmation')}
     ]
   },
   {
@@ -114,7 +114,6 @@ const routes = [
         next("/dashboard")
       } else {
         next();
-        util.common.logoutSuccessfully();
       }
     }
   },
@@ -132,7 +131,6 @@ const routes = [
 let controlLogin = (next) => {
   initSet();
   if (!store.getters.getIsLogin || util.common.getToken() == null) {
-    next("/login");
     util.common.logoutSuccessfully();
   } else
     next()

@@ -6,59 +6,63 @@ export const setTradeResult = ({state, commit}, tradeResult) => {
       if (response) {
         commit("updateTradeResult", response.data);
       }
-    });
+      util.common.control(response);
+    }).catch(error => {
+    util.common.control(error)
+  });
 };
 
 export const getTradeResult = ({commit}) => {
-  commit("setIsLoading", true);
   util.service.get("trade/result")
     .then(response => {
       if (response) {
         commit("updateTradeResult", response.data);
       }
-      commit("setIsLoading", false);
+      util.common.control(response);
     }).catch(error => {
     util.common.control(error)
   })
 };
 
-export const registerConfirm = (vueContext,param) => {
+export const registerConfirm = (vueContext, param) => {
   return util.service.get("user/registrationConfirm/" + param)
     .then(response => {
       if (response) {
+        util.common.control(response);
         return response;
       }
     }).catch(error => {
-    util.common.control(error)
-  })
+      util.common.control(error)
+    })
 };
 
 
 export const login = (vueContext, loginData) => {
   loginData.password = util.randomCode(loginData.password);
   loginData.username = util.randomCode(loginData.username);
-  vueContext.commit("setIsLoading", true);
   return util.service.post("auth/login", loginData)
     .then(response => {
-      loginData = {};
+      loginData.password = null;
+      loginData.username = null;
       if (response) {
         util.common.loginSuccessfully(response.data);
-        //vueContext.dispatch("initApp");
         vueContext.dispatch("getTradeResult");
         util.common.routePush("dashboard");
+        util.common.control(response);
       }
-      vueContext.commit("setIsLoading", false);
     }).catch(error => {
-      loginData = {};
+      loginData.password = null;
+      loginData.username = null;
+      util.common.control(error);
     });
 };
 
-export const logout = (vueContext) => {
+export const logout = () => {
   return util.service.post("auth/logout")
     .then(res => {
       if (res) {
         util.common.logoutSuccessfully();
-        util.common.routePush("login");
+        util.common.control(res);
       }
     }).catch(err => {
       util.common.control(err);
@@ -71,8 +75,11 @@ export const userRegister = (vueContext, registerData) => {
       if (response) {
         return response;
       }
+      util.common.control(response);
+
     }).catch(error => {
       registerData = {};
+      util.common.control(error);
     })
 };
 

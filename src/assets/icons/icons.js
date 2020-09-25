@@ -20,7 +20,7 @@ import {
   cibCcVisa,
   cibStripe,
   cibPaypal,
-  cibGooglePay, 
+  cibGooglePay,
   cibCcAmex
 } from '@coreui/icons'
 import {
@@ -41,6 +41,7 @@ import {
   cilCloudDownload,
   cilChartPie,
   cilCheck,
+  cilWarning,
   cilChevronBottom,
   cilChevronTop,
   cilCheckCircle,
@@ -94,6 +95,7 @@ export const iconsSet = Object.assign(
     cilCloudDownload,
     cilChartPie,
     cilCheck,
+    cilWarning,
     cilChevronBottom,
     cilChevronTop,
     cilCheckCircle,
@@ -157,10 +159,10 @@ export const iconsSet = Object.assign(
     cibBehance,
     cibReddit,
     cibVimeo,
-    cibCcMastercard, 
-    cibCcVisa, 
-    cibStripe, 
-    cibPaypal, 
+    cibCcMastercard,
+    cibCcVisa,
+    cibStripe,
+    cibPaypal,
     cibGooglePay,
     cibCcAmex
   }

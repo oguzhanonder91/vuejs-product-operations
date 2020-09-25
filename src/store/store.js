@@ -16,7 +16,14 @@ Vue.use(Vuex);
     isLoading : false,
     user : null,
     sidebarShow: 'responsive',
-    sidebarMinimize: false
+    sidebarMinimize: false,
+    myToast : {
+      message : "",
+      icon : "",
+      type : "",
+      header: "Bilgi Mesajı",
+      show : false
+    }
   },
   getters: getters,
   mutations: mutations,
