@@ -30,12 +30,12 @@
       return {}
     },
     created() {
-      if (this.getIsLoading) {
+      if (this.getIsLogin) {
         this.$store.dispatch("getTradeResult");
       }
     },
     computed: {
-      ...mapGetters(["getIsLoading", "getMyToast"]),
+      ...mapGetters(["getIsLoading", "getMyToast","getIsLogin"]),
     }
   }
 </script>

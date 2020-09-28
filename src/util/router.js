@@ -35,6 +35,14 @@ const Register = resolve  =>{
   })
 }
 */
+const DashBoard = () => System.import('../components/Dashboard');
+const TheContainer = () => System.import('../containers/TheContainer');
+const ProductPurchase = () => System.import('../components/ProductPurchase');
+const ProductSell = () => System.import('../components/ProductSell');
+const UserConfirmation = () => System.import('../components/UserConfirmation');
+const Login = () => System.import('../components/Login');
+const Register = () => System.import('../components/Register');
+
 
 Vue.use(VueRouter);
 
@@ -45,7 +53,7 @@ const routes = [
     path: '/',
     redirect: '/dashboard',
     name: 'Home',
-    component: () => System.import('../containers/TheContainer'),
+    component: TheContainer,
     beforeEnter(to, from, next) {
       controlLogin(next);
     },
@@ -53,7 +61,7 @@ const routes = [
       {
         path: 'dashboard',
         name: 'Dashboard',
-        component: () => System.import('../components/Dashboard'),
+        component: DashBoard,
         beforeEnter(to, from, next) {
           controlLogin(next);
         }
@@ -79,7 +87,7 @@ const routes = [
           {
             path: "purchase",
             name: "ProductPurchase",
-            component: () => System.import('../components/ProductPurchase'),
+            component: ProductPurchase,
             beforeEnter(to, from, next) {
               controlLogin(next);
             }
@@ -87,7 +95,7 @@ const routes = [
           {
             path: "sell",
             name: "ProductSell",
-            component: () => System.import('../components/ProductSell'),
+            component: ProductSell,
             beforeEnter(to, from, next) {
               controlLogin(next);
             }
@@ -99,15 +107,15 @@ const routes = [
   {
     path: "/user/registrationConfirm",
     name: "UserConfirmation",
-    component: () => System.import('../components/UserConfirmation'),
+    component: UserConfirmation,
     children: [
-      {path: ":param", component: () => System.import('../components/UserConfirmation')}
+      {path: ":param", component: UserConfirmation}
     ]
   },
   {
     path: "/login",
     name: "Login",
-    component: () => System.import('../components/Login'),
+    component: Login,
     beforeEnter(to, from, next) {
       initSet();
       if (store.getters.getIsLogin && util.common.getToken() != null) {
@@ -120,7 +128,7 @@ const routes = [
   {
     path: "/register",
     name: "Register",
-    component: () => System.import('../components/Register'),
+    component: Register,
   },
   {
     path: "*", redirect: "/dashboard",
