@@ -64,7 +64,7 @@
       processType= "delete"
       @update:show="deleteProduct"
     >
-      <h3>{{product.title}}</h3> ürününü silmek istiyor musunuz ?
+      <h3>{{product.title}}</h3> kaydını silmek istiyor musunuz ?
     </MyModal>
 
     <CCardBody
