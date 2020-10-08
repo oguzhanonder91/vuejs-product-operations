@@ -36,6 +36,12 @@ export const registerConfirm = (vueContext, param) => {
     })
 };
 
+export const getUserAndMenus = (vueContext) => {
+  return util.service.get("user/menus")
+    .then(response => {
+      console.log(response);
+    })
+}
 
 export const login = (vueContext, loginData) => {
   loginData.password = util.randomCode(loginData.password);
@@ -46,6 +52,7 @@ export const login = (vueContext, loginData) => {
       loginData.username = null;
       if (response) {
         util.common.loginSuccessfully(response.data);
+        vueContext.dispatch("getUserAndMenus");
         vueContext.dispatch("getTradeResult");
         util.common.routePush("dashboard");
         util.common.control(response);

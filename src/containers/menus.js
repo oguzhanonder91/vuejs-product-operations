@@ -8,11 +8,6 @@ export default [
         to: '/dashboard',
         icon: 'cil-speedometer'
       },
-
-      {
-        _name: 'CSidebarNavTitle',
-        _children: ['Ürün']
-      },
       {
         _name: 'CSidebarNavDropdown',
         name: 'Ürün Yönetimi',
