@@ -115,7 +115,43 @@ export const common = {
       toast.icon = toastIcon.WARNING;
     }
     return toast;
+  },
+  prepareMenus(values) {
+    let menus = [];
+    let children = [];
+    let val;
+    let child;
+    if (values) {
+      for (val in values) {
+        let menu = {};
+        if (values[val].code === "dashboard") {
+          menu._name = "CSidebarNavItem"
+        } else {
+          menu._name = "CSidebarNavDropdown"
+        }
+        menu.name = values[val].name;
+        menu.icon = values[val].icon;
+        menu.to = values[val].path;
+        menu.orderItem = values[val].orderItem;
+        if (values[val].children.length > 0) {
+          for (child in values[val].children) {
+            let childMenu = {};
+            childMenu.name = values[val].children[child].name;
+            childMenu.to = values[val].children[child].path;
+            childMenu.orderItem = values[val].children[child].orderItem;
+            childMenu.code = values[val].children[child].code;
+            childMenu.icon = values[val].children[child].icon;
+            children.push(childMenu);
+          }
+          menu.items = children;
+        }
+        menus.push(menu);
+      }
+    }
+    return menus;
   }
+
+
 };
 
 export const randomCode = function (data) {

@@ -1,3 +1,5 @@
+import * as util from '../util/util';
+
 export const updateTradeResult = (state, trade) => {
   state.count = trade.count;
   state.sale = trade.sale;
@@ -29,5 +31,14 @@ export const toggleSidebarMobile = (state) => {
 
 export const set = (state, [variable, value]) => {
   state[variable] = value
+};
+
+export const setUser = (state, value) => {
+  state.user = value;
+};
+
+export const setShowMenus = (state,values) =>{
+  let menus = util.common.prepareMenus(values);
+  state.showMenus = menus;
 };
 

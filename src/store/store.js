@@ -7,22 +7,23 @@ import * as actions from './actions';
 
 Vue.use(Vuex);
 
- const store = new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     purchase: 0.0,
     sale: 0.0,
     balance: 0.0,
-    isLogin : null,
-    isLoading : false,
-    user : null,
+    isLogin: null,
+    isLoading: false,
+    user: null,
+    showMenus: [],
     sidebarShow: 'responsive',
     sidebarMinimize: false,
-    myToast : {
-      message : "",
-      icon : "",
-      type : "",
+    myToast: {
+      message: "",
+      icon: "",
+      type: "",
       header: "Bilgi Mesajı",
-      show : false
+      show: false
     }
   },
   getters: getters,
@@ -33,5 +34,5 @@ Vue.use(Vuex);
   }
 });
 
- export default store;
+export default store;
 

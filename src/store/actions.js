@@ -39,7 +39,14 @@ export const registerConfirm = (vueContext, param) => {
 export const getUserAndMenus = (vueContext) => {
   return util.service.get("user/menus")
     .then(response => {
-      console.log(response);
+      if (response) {
+        vueContext.commit("setUser", response.data);
+        vueContext.commit("setShowMenus", response.data.menus);
+        util.common.control(response);
+      }
+
+    }).catch(error => {
+      util.common.control(error);
     })
 }
 
