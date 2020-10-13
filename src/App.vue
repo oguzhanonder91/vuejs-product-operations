@@ -33,8 +33,6 @@
       if (this.getIsLogin) {
         this.$store.dispatch("getTradeResult");
         this.$store.dispatch("getUserAndMenus");
-      }else{
-        this.$store.dispatch("initIsLogin");
       }
     },
     computed: {

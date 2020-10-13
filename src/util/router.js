@@ -48,22 +48,21 @@ Vue.use(VueRouter);
 
 
 const routes = [
-
   {
     path: '/',
     redirect: '/dashboard',
     name: 'Home',
     component: TheContainer,
-    beforeEnter(to, from, next) {
-      controlLoginAndMenuPermission(to, from, next);
+    beforeEnter: (to, from, next) => {
+      controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
     },
     children: [
       {
         path: 'dashboard',
         name: 'Dashboard',
         component: DashBoard,
-        beforeEnter(to, from, next) {
-          controlLoginAndMenuPermission(to, from, next);
+        beforeEnter: (to, from, next) => {
+          controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
         }
       },
       {
@@ -80,16 +79,16 @@ const routes = [
             path: "purchase",
             name: "ProductPurchase",
             component: ProductPurchase,
-            beforeEnter(to, from, next) {
-              controlLoginAndMenuPermission(to, from, next);
+            beforeEnter: (to, from, next) => {
+              controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
             }
           },
           {
             path: "sell",
             name: "ProductSell",
             component: ProductSell,
-            beforeEnter(to, from, next) {
-              controlLoginAndMenuPermission(to, from, next);
+            beforeEnter: (to, from, next) => {
+              controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
             }
           },
         ]
@@ -101,7 +100,10 @@ const routes = [
     name: "UserConfirmation",
     component: UserConfirmation,
     children: [
-      {path: ":param", component: UserConfirmation}
+      {
+        path: ":param",
+        component: UserConfirmation,
+      }
     ]
   },
   {
@@ -121,20 +123,20 @@ const routes = [
 ];
 
 let controlLoginAndMenuPermission = async (to, from, next) => {
-  let isLogin = await initSet();
+  let isLogin = await initSet().catch(e => console.log(e));
   if (!isLogin || util.common.getToken() === undefined) {
     util.common.logoutSuccessfully();
   } else if (store.getters.getShowPermissionMenus.includes(to.name)) {
     next()
-  }else{
+  } else {
     router.go(-1);
   }
 };
 
 let initSet = async () => {
   if (store.getters.getIsLogin == null) {
-    store.dispatch("initIsLogin");
-    if (store.getters.getUser == null) {
+    await store.dispatch("initIsLogin");
+    if (store.getters.getIsLogin && store.getters.getUser == null) {
       await store.dispatch("getUserAndMenus");
     }
   }
