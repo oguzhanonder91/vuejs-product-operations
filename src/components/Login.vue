@@ -69,6 +69,13 @@
         },
       }
     },
+    created(){
+      if(this.$store.getters.getIsLogin){
+        this.$store.dispatch("getTradeResult");
+        this.$store.dispatch("getUserAndMenus");
+        util.common.routePush("dashboard");
+      }
+    },
     methods: {
       login() {
         this.$store.dispatch("login", this.loginRequest)

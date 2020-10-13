@@ -24,4 +24,7 @@ export const getUser = (state) => {
 
 export const getShowMenus = (state) => {
   return state.showMenus;
+};
+export const getShowPermissionMenus = (state) => {
+  return state.permissionMenuCodes;
 }

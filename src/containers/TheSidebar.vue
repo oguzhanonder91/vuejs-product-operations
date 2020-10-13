@@ -22,7 +22,7 @@
       />
     </CSidebarBrand>
 
-    <CRenderFunction flat :content-to-render="$options.nav"/>
+    <CRenderFunction flat :content-to-render="this.$store.getters.getShowMenus"/>
     <CSidebarMinimizer
       class="d-md-down-none"
       @click.native="sideBarMinimize( ['sidebarMinimize', !minimize])"
@@ -31,11 +31,9 @@
 </template>
 
 <script>
-import nav from './menus'
 
 export default {
   name: 'TheSidebar',
-  nav,
   methods : {
     sideBarMinimize(param){
       this.$store.commit("set",param);

@@ -55,7 +55,7 @@ const routes = [
     name: 'Home',
     component: TheContainer,
     beforeEnter(to, from, next) {
-      controlLogin(next);
+      controlLoginAndMenuPermission(to, from, next);
     },
     children: [
       {
@@ -63,7 +63,7 @@ const routes = [
         name: 'Dashboard',
         component: DashBoard,
         beforeEnter(to, from, next) {
-          controlLogin(next);
+          controlLoginAndMenuPermission(to, from, next);
         }
       },
       {
@@ -81,7 +81,7 @@ const routes = [
             name: "ProductPurchase",
             component: ProductPurchase,
             beforeEnter(to, from, next) {
-              controlLogin(next);
+              controlLoginAndMenuPermission(to, from, next);
             }
           },
           {
@@ -89,7 +89,7 @@ const routes = [
             name: "ProductSell",
             component: ProductSell,
             beforeEnter(to, from, next) {
-              controlLogin(next);
+              controlLoginAndMenuPermission(to, from, next);
             }
           },
         ]
@@ -107,15 +107,7 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login,
-    beforeEnter(to, from, next) {
-      initSet();
-      if (store.getters.getIsLogin && util.common.getToken() != null) {
-        next("/dashboard")
-      } else {
-        next();
-      }
-    }
+    component: Login
   },
   {
     path: "/register",
@@ -128,19 +120,25 @@ const routes = [
 
 ];
 
-let controlLogin = (next) => {
-  initSet();
-  if (!store.getters.getIsLogin || util.common.getToken() == null) {
+let controlLoginAndMenuPermission = async (to, from, next) => {
+  let isLogin = await initSet();
+  if (!isLogin || util.common.getToken() === undefined) {
     util.common.logoutSuccessfully();
-  } else
+  } else if (store.getters.getShowPermissionMenus.includes(to.name)) {
     next()
+  }else{
+    router.go(-1);
+  }
 };
 
-let initSet = () => {
-  let isLogin = store.getters.getIsLogin;
-  if (isLogin == null) {
-    store.dispatch("initIsLogin")
+let initSet = async () => {
+  if (store.getters.getIsLogin == null) {
+    store.dispatch("initIsLogin");
+    if (store.getters.getUser == null) {
+      await store.dispatch("getUserAndMenus");
+    }
   }
+  return store.getters.getIsLogin;
 };
 
 const router = new VueRouter({

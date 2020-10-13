@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     isLoading: false,
     user: null,
     showMenus: [],
+    permissionMenuCodes:[],
     sidebarShow: 'responsive',
     sidebarMinimize: false,
     myToast: {

@@ -54,12 +54,12 @@ export const login = (vueContext, loginData) => {
   loginData.password = util.randomCode(loginData.password);
   loginData.username = util.randomCode(loginData.username);
   return util.service.post("auth/login", loginData)
-    .then(response => {
+    .then(async response => {
       loginData.password = null;
       loginData.username = null;
       if (response) {
         util.common.loginSuccessfully(response.data);
-        vueContext.dispatch("getUserAndMenus");
+        await vueContext.dispatch("getUserAndMenus");
         vueContext.dispatch("getTradeResult");
         util.common.routePush("dashboard");
         util.common.control(response);
@@ -87,9 +87,10 @@ export const userRegister = (vueContext, registerData) => {
   return util.service.post("user/registration", registerData)
     .then(response => {
       if (response) {
+        let toast = util.common.prepareToast("Bilgi", util.toastType.SUCCESS, "Lütfen mailinizi kontrol edin.", true);
+        util.common.control(response, toast);
         return response;
       }
-      util.common.control(response);
 
     }).catch(error => {
       registerData = {};

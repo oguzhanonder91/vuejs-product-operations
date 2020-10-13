@@ -39,6 +39,7 @@ export const setUser = (state, value) => {
 
 export const setShowMenus = (state,values) =>{
   let menus = util.common.prepareMenus(values);
-  state.showMenus = menus;
+  state.showMenus = menus.showMenus;
+  state.permissionMenuCodes = menus.permissionMenuCodes
 };
 

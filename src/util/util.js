@@ -1,11 +1,23 @@
+import Vue from "vue";
 import store from '../store/store';
 import router from '../util/router';
-import Vue from "vue";
+import VueResource from "vue-resource";
+
+
+Vue.use(VueResource);
+Vue.http.options.root = "http://localhost:8081/";
+
+Vue.http.interceptors.push((request, next) => {
+  if (store.getters.getIsLogin != null && store.getters.getIsLogin && common.getToken()) {
+    request.headers.set('Authorization', 'Bearer ' + common.getToken());
+  }
+});
 
 export const token = "mytoken";
 export const expiry = "expiryDate";
 export const diffTime = "diffTime";
 export const rndData = "ond75";
+
 export const toastType = {
   SUCCESS: 'success',
   WARNING: 'warning',
@@ -17,7 +29,7 @@ export const toastIcon = {
   SUCCESS: 'cilCheck',
   WARNING: 'cilWarning',
   ERROR: 'cilXCircle',
-  FORBIDDEN: 'cilUserX'
+  FORBIDDEN: 'cilUserUnfollow'
 };
 
 
@@ -60,9 +72,8 @@ export const common = {
     localStorage.removeItem(token);
     localStorage.removeItem(expiry);
     localStorage.removeItem(diffTime);
-    if (router.currentRoute.name !== "Login") {
+    if (router.currentRoute.name !== "Login")
       this.routePush("login");
-    }
   },
   loginSuccessfully(res) {
     store.commit("setIsLogin", true);
@@ -88,10 +99,11 @@ export const common = {
     return result;
   },
   routePush(path) {
-    try {
-      router.push("/" + path)
-    } catch (e) {
-    }
+    router.push("/" + path,
+      (event) => {
+      },
+      (error) => {
+      })
   },
   setLoadingFalse() {
     store.commit("setIsLoading", false);
@@ -117,6 +129,10 @@ export const common = {
     return toast;
   },
   prepareMenus(values) {
+    let obj = {};
+    let objList = [];
+    let permissionMenuCodes = [];
+    obj._name = 'CSidebarNav';
     let menus = [];
     let children = [];
     let val;
@@ -124,7 +140,7 @@ export const common = {
     if (values) {
       for (val in values) {
         let menu = {};
-        if (values[val].code === "dashboard") {
+        if (values[val].code === "Dashboard") {
           menu._name = "CSidebarNavItem"
         } else {
           menu._name = "CSidebarNavDropdown"
@@ -133,6 +149,7 @@ export const common = {
         menu.icon = values[val].icon;
         menu.to = values[val].path;
         menu.orderItem = values[val].orderItem;
+        menu.code = values[val].code;
         if (values[val].children.length > 0) {
           for (child in values[val].children) {
             let childMenu = {};
@@ -142,13 +159,20 @@ export const common = {
             childMenu.code = values[val].children[child].code;
             childMenu.icon = values[val].children[child].icon;
             children.push(childMenu);
+            permissionMenuCodes.push(childMenu.code);
           }
           menu.items = children;
         }
         menus.push(menu);
+        permissionMenuCodes.push(menu.code);
       }
     }
-    return menus;
+    obj._children = menus;
+    objList.push(obj);
+    return {
+      showMenus: objList,
+      permissionMenuCodes: permissionMenuCodes
+    };
   }
 
 
