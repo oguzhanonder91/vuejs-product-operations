@@ -135,37 +135,37 @@ export const common = {
     obj._name = 'CSidebarNav';
     let menus = [];
     let children = [];
-    let val;
-    let child;
     if (values) {
-      for (val in values) {
+      values.forEach(value => {
         let menu = {};
-        if (values[val].code === "Dashboard") {
+        if (value.code === "Dashboard") {
           menu._name = "CSidebarNavItem"
         } else {
           menu._name = "CSidebarNavDropdown"
         }
-        menu.name = values[val].name;
-        menu.icon = values[val].icon;
-        menu.to = values[val].path;
-        menu.orderItem = values[val].orderItem;
-        menu.code = values[val].code;
-        if (values[val].children.length > 0) {
-          for (child in values[val].children) {
+
+        menu.name = value.name;
+        menu.icon = value.icon;
+        menu.to = value.path;
+        menu.orderItem = value.orderItem;
+        menu.code = value.code;
+
+        if (value.children != null) {
+          value.children.forEach(child => {
             let childMenu = {};
-            childMenu.name = values[val].children[child].name;
-            childMenu.to = values[val].children[child].path;
-            childMenu.orderItem = values[val].children[child].orderItem;
-            childMenu.code = values[val].children[child].code;
-            childMenu.icon = values[val].children[child].icon;
+            childMenu.name = child.name;
+            childMenu.to = child.path;
+            childMenu.orderItem = child.orderItem;
+            childMenu.code = child.code;
+            childMenu.icon = child.icon;
             children.push(childMenu);
             permissionMenuCodes.push(childMenu.code);
-          }
+          });
           menu.items = children;
         }
         menus.push(menu);
         permissionMenuCodes.push(menu.code);
-      }
+      });
     }
     obj._children = menus;
     objList.push(obj);
@@ -174,8 +174,6 @@ export const common = {
       permissionMenuCodes: permissionMenuCodes
     };
   }
-
-
 };
 
 export const randomCode = function (data) {

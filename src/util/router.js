@@ -54,7 +54,7 @@ const routes = [
     name: 'Home',
     component: TheContainer,
     beforeEnter: (to, from, next) => {
-      controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
+      controlLoginAndMenuPermission(to, from, next).catch();
     },
     children: [
       {
@@ -62,7 +62,7 @@ const routes = [
         name: 'Dashboard',
         component: DashBoard,
         beforeEnter: (to, from, next) => {
-          controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
+          controlLoginAndMenuPermission(to, from, next).catch();
         }
       },
       {
@@ -80,7 +80,7 @@ const routes = [
             name: "ProductPurchase",
             component: ProductPurchase,
             beforeEnter: (to, from, next) => {
-              controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
+              controlLoginAndMenuPermission(to, from, next).catch();
             }
           },
           {
@@ -88,7 +88,7 @@ const routes = [
             name: "ProductSell",
             component: ProductSell,
             beforeEnter: (to, from, next) => {
-              controlLoginAndMenuPermission(to, from, next).catch(e => console.log(e));
+              controlLoginAndMenuPermission(to, from, next).catch();
             }
           },
         ]
@@ -123,7 +123,7 @@ const routes = [
 ];
 
 let controlLoginAndMenuPermission = async (to, from, next) => {
-  let isLogin = await initSet().catch(e => console.log(e));
+  let isLogin = await initSet().catch();
   if (!isLogin || util.common.getToken() === undefined) {
     util.common.logoutSuccessfully();
   } else if (store.getters.getShowPermissionMenus.includes(to.name)) {
