@@ -15,6 +15,9 @@
         </div>
       </CHeaderNavLink>
     </template>
+    <div class="text-center mt-1" style="height: 35px">
+      <strong>{{getUser.name}} {{getUser.surname}}</strong>
+    </div>
     <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Account</strong>
     </CDropdownHeader>
@@ -32,6 +35,8 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     name: 'TheHeaderDropdownAccnt',
     data() {
@@ -41,6 +46,9 @@
       logout() {
         this.$store.dispatch("logout");
       }
+    },
+    computed: {
+      ...mapGetters(["getUser"]),
     }
   }
 </script>
