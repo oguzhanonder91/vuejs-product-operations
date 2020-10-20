@@ -43,6 +43,12 @@ export const common = {
           store.commit("setMyToast", toast);
         }
         break;
+      case 400 :
+        if (result.body !== undefined && result.body.message !== undefined) {
+          toast = this.prepareToast(result.body.message, toastType.ERROR, result.body.details, true);
+          store.commit("setMyToast", toast);
+        }
+        break;
       case 401 :
         this.logoutSuccessfully();
         if (result.body !== undefined && result.body.message !== undefined) {

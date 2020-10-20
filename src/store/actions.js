@@ -84,6 +84,8 @@ export const logout = () => {
 };
 
 export const userRegister = (vueContext, registerData) => {
+  registerData.password = util.randomCode(registerData.password);
+  registerData.matchingPassword = util.randomCode(registerData.matchingPassword);
   return util.service.post("user/registration", registerData)
     .then(response => {
       if (response) {
@@ -93,7 +95,7 @@ export const userRegister = (vueContext, registerData) => {
       }
 
     }).catch(error => {
-      registerData = {};
+      registerData = null;
       util.common.control(error);
     })
 };
