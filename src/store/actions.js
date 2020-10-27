@@ -53,7 +53,7 @@ export const getUserAndMenus = (vueContext) => {
 export const login = (vueContext, loginData) => {
   loginData.password = util.randomCode(loginData.password);
   loginData.username = util.randomCode(loginData.username);
-  return util.service.post("auth/login", loginData)
+  util.service.post("auth/login", loginData)
     .then(async response => {
       loginData.password = null;
       loginData.username = null;
@@ -65,22 +65,22 @@ export const login = (vueContext, loginData) => {
         util.common.control(response);
       }
     }).catch(error => {
-      loginData.password = null;
-      loginData.username = null;
-      util.common.control(error);
-    });
+    loginData.password = null;
+    loginData.username = null;
+    util.common.control(error);
+  });
 };
 
 export const logout = () => {
-  return util.service.post("auth/logout")
+  util.service.post("auth/logout")
     .then(res => {
       if (res) {
         util.common.logoutSuccessfully();
         util.common.control(res);
       }
     }).catch(err => {
-      util.common.control(err);
-    });
+    util.common.control(err);
+  });
 };
 
 export const userRegister = (vueContext, registerData) => {
@@ -91,6 +91,7 @@ export const userRegister = (vueContext, registerData) => {
       if (response) {
         let toast = util.common.prepareToast("Bilgi", util.toastType.SUCCESS, "Lütfen mailinizi kontrol edin.", true);
         util.common.control(response, toast);
+        util.common.routePush("login");
         return response;
       }
 

@@ -14,7 +14,9 @@
                   placeholder="Email"
                   autocomplete="email"
                 >
-                  <template #prepend-content><CIcon name="cil-user"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-user"/>
+                  </template>
                 </CInput>
                 <CInput
                   v-model="loginRequest.password"
@@ -22,8 +24,21 @@
                   type="password"
                   autocomplete="current-password"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked"/>
+                  </template>
                 </CInput>
+                <CRow>
+                  <CCol col="2" class="text-left">
+                    <CSwitch color="primary"  :checked.sync = loginRequest.rememberMe variant="opposite" shape="pill" v-bind="labelIcon"/>
+                  </CCol>
+                  <CCol col="4" class="text-left">
+                    <p class="text-muted">Remember Me</p>
+                  </CCol>
+                  <CCol col="6" class="text-right">
+                    <CButton color="link" class="p-0">Forgot password?</CButton>
+                  </CCol>
+                </CRow>
                 <CRow>
                   <CCol col="6" class="text-left">
                     <CButton color="primary" class="px-4" @click="login">Login</CButton>
@@ -65,12 +80,17 @@
       return {
         loginRequest: {
           username: null,
-          password: null
+          password: null,
+          rememberMe: null,
+        },
+        labelIcon: {
+          labelOn: '\u2713',
+          labelOff: '\u2715'
         },
       }
     },
-    created(){
-      if(this.$store.getters.getIsLogin){
+    created() {
+      if (this.$store.getters.getIsLogin) {
         this.$store.dispatch("getTradeResult");
         this.$store.dispatch("getUserAndMenus");
         util.common.routePush("dashboard");
@@ -80,8 +100,8 @@
       login() {
         this.$store.dispatch("login", this.loginRequest)
       },
-      goToRegister(){
-       util.common.routePush("register");
+      goToRegister() {
+        util.common.routePush("register");
       }
     },
   }

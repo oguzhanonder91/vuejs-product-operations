@@ -13,14 +13,18 @@
                   placeholder="Name"
                   autocomplete="name"
                 >
-                  <template #prepend-content><CIcon name="cil-user"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-user"/>
+                  </template>
                 </CInput>
                 <CInput
                   v-model="user.surname"
                   placeholder="Surname"
                   autocomplete="surname"
                 >
-                  <template #prepend-content><CIcon name="cil-user"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-user"/>
+                  </template>
                 </CInput>
                 <CInput
                   v-model="user.email"
@@ -34,7 +38,9 @@
                   type="password"
                   autocomplete="new-password"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked"/>
+                  </template>
                 </CInput>
                 <CInput
                   v-model="user.matchingPassword"
@@ -43,7 +49,9 @@
                   autocomplete="new-password"
                   class="mb-4"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                  <template #prepend-content>
+                    <CIcon name="cil-lock-locked"/>
+                  </template>
                 </CInput>
                 <CButton color="success" @click="createUser" block>Create Account</CButton>
                 <CButton color="info" @click="goToLoginPage" block>Go to Login Page</CButton>
@@ -75,16 +83,11 @@
       }
     },
     methods: {
-      goToLoginPage(){
+      goToLoginPage() {
         util.common.routePush("login");
       },
       createUser() {
-        this.$store.dispatch("userRegister", this.user)
-          .then(res => {
-            if (res) {
-              util.common.routePush("login");
-            }
-          })
+        this.$store.dispatch("userRegister", this.user);
       }
     }
   }
