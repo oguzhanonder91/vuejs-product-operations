@@ -179,6 +179,15 @@ export const common = {
       showMenus: objList,
       permissionMenuCodes: permissionMenuCodes
     };
+  },
+  setNull(object) {
+    let entries = Object.entries(object);
+    entries.forEach(([k, v]) => {
+      if (v !== null && typeof v === "object") {
+        this.setNull(object[k])
+      }
+      object[k] = null;
+    });
   }
 };
 

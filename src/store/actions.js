@@ -55,8 +55,6 @@ export const login = (vueContext, loginData) => {
   loginData.username = util.randomCode(loginData.username);
   util.service.post("auth/login", loginData)
     .then(async response => {
-      loginData.password = null;
-      loginData.username = null;
       if (response) {
         util.common.loginSuccessfully(response.data);
         await vueContext.dispatch("getUserAndMenus");
@@ -69,6 +67,7 @@ export const login = (vueContext, loginData) => {
     loginData.username = null;
     util.common.control(error);
   });
+  util.common.setNull(loginData);
 };
 
 export const logout = () => {
@@ -86,7 +85,7 @@ export const logout = () => {
 export const userRegister = (vueContext, registerData) => {
   registerData.password = util.randomCode(registerData.password);
   registerData.matchingPassword = util.randomCode(registerData.matchingPassword);
-  return util.service.post("user/registration", registerData)
+  util.service.post("user/registration", registerData)
     .then(response => {
       if (response) {
         let toast = util.common.prepareToast("Bilgi", util.toastType.SUCCESS, "Lütfen mailinizi kontrol edin.", true);
@@ -96,9 +95,9 @@ export const userRegister = (vueContext, registerData) => {
       }
 
     }).catch(error => {
-      registerData = null;
-      util.common.control(error);
-    })
+    util.common.control(error);
+  });
+  util.common.setNull(registerData);
 };
 
 export const setTimeOutTimerExpiry = (vueContext, expiry) => {
