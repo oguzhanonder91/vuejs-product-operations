@@ -78,8 +78,7 @@ export const common = {
     localStorage.removeItem(token);
     localStorage.removeItem(expiry);
     localStorage.removeItem(diffTime);
-    if (router.currentRoute.name !== "Login")
-      this.routePush("login");
+    this.routePush("login");
   },
   loginSuccessfully(res) {
     store.commit("setIsLogin", true);
@@ -123,15 +122,25 @@ export const common = {
     toast.type = type;
     toast.message = message;
     toast.show = show;
-    if (type === toastType.ERROR) {
-      toast.icon = toastIcon.ERROR;
-    } else if (type === toastType.SUCCESS) {
-      toast.icon = toastIcon.SUCCESS;
-    } else if (type === toastType.FORBIDDEN) {
-      toast.icon = toastIcon.FORBIDDEN;
-    } else {
-      toast.icon = toastIcon.WARNING;
+    switch (type) {
+      case toastType.ERROR:
+        toast.icon = toastIcon.ERROR;
+        break;
+      case toastType.SUCCESS:
+        toast.icon = toastIcon.SUCCESS;
+        break;
+      case toastType.FORBIDDEN:
+        toast.icon = toastIcon.FORBIDDEN;
+        break;
+      case toastType.WARNING:
+        toast.icon = toastIcon.WARNING;
+        break;
     }
+
+    return toast;
+  },
+  successToast(message) {
+    let toast = common.prepareToast("Bilgi", toastType.SUCCESS, message, true);
     return toast;
   },
   prepareMenus(values) {

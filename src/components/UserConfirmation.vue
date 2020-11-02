@@ -41,13 +41,13 @@
       }
     },
     methods: {
-      goToLogin(){
+      goToLogin() {
         util.common.routePush("login");
       }
     },
     watch: {
-      currentAlertCounter : function(val){
-        if(val === 0){
+      currentAlertCounter: function (val) {
+        if (val === 0) {
           util.common.routePush("login");
         }
       }
@@ -55,13 +55,16 @@
     created() {
       let split = this.$route.path.split("/");
       let param = split[split.length - 1];
-      this.$store.dispatch("registerConfirm", param)
-        .then(res => {
-          if (res) {
-            this.message = res.bodyText;
-            this.currentAlertCounter = 10;
-          }
-        })
+      if (param !== undefined && param.length > 0) {
+        this.$store.dispatch("registerConfirm", param)
+          .then(res => {
+            if (res) {
+              this.message = res.bodyText;
+              this.currentAlertCounter = 10;
+            }
+          })
+      }
+
     }
   }
 </script>

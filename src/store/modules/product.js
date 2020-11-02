@@ -41,7 +41,6 @@ const actions = {
     })
   },
   saveProduct({dispatch, commit}, product) {
-    let toast = {};
     util.service.post("product/create", product)
       .then((response) => {
         if (response) {
@@ -53,7 +52,7 @@ const actions = {
           };
           dispatch("setTradeResult", tradeResult);
         }
-        toast = util.common.prepareToast("Bilgi", util.toastType.SUCCESS, "İşlem Başarılı Şekilde Gerçekleşti.", true);
+        let toast = util.common.successToast("İşlem Başarılı Şekilde Gerçekleşti...");
         util.common.control(response, toast);
 
       }).catch(error => {

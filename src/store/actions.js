@@ -88,7 +88,7 @@ export const userRegister = (vueContext, registerData) => {
   util.service.post("user/registration", registerData)
     .then(response => {
       if (response) {
-        let toast = util.common.prepareToast("Bilgi", util.toastType.SUCCESS, "Lütfen mailinizi kontrol edin.", true);
+        let toast = util.common.successToast("Lütfen mailinizi kontrol edin...");
         util.common.control(response, toast);
         util.common.routePush("login");
         return response;

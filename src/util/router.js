@@ -42,7 +42,7 @@ const ProductSell = () => System.import('../components/ProductSell');
 const UserConfirmation = () => System.import('../components/UserConfirmation');
 const Login = () => System.import('../components/Login');
 const Register = () => System.import('../components/Register');
-
+const ForgotPassword = () => System.import('../components/ForgotPassword');
 
 Vue.use(VueRouter);
 
@@ -94,6 +94,11 @@ const routes = [
         ]
       }
     ]
+  },
+  {
+    path: "/user/forgotPassword",
+    name: "ForgotPassword",
+    component: ForgotPassword,
   },
   {
     path: "/user/registrationConfirm",

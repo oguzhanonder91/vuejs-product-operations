@@ -30,13 +30,14 @@
                 </CInput>
                 <CRow>
                   <CCol col="2" class="text-left">
-                    <CSwitch color="primary"  :checked.sync = loginRequest.rememberMe variant="opposite" shape="pill" v-bind="labelIcon"/>
+                    <CSwitch color="primary" :checked.sync=loginRequest.rememberMe variant="opposite" shape="pill"
+                             v-bind="labelIcon"/>
                   </CCol>
                   <CCol col="4" class="text-left">
                     <p class="text-muted">Remember Me</p>
                   </CCol>
                   <CCol col="6" class="text-right">
-                    <CButton color="link" class="p-0">Forgot password?</CButton>
+                    <CButton @click="forgotPassword" color="link" class="p-0">Forgot password?</CButton>
                   </CCol>
                 </CRow>
                 <CRow>
@@ -81,12 +82,12 @@
         loginRequest: {
           username: null,
           password: null,
-          rememberMe: null,
+          rememberMe: false,
         },
         labelIcon: {
           labelOn: '\u2713',
           labelOff: '\u2715'
-        },
+        }
       }
     },
     created() {
@@ -102,6 +103,9 @@
       },
       goToRegister() {
         util.common.routePush("register");
+      },
+      forgotPassword() {
+        util.common.routePush("user/forgotPassword");
       }
     },
   }
