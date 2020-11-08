@@ -24,8 +24,8 @@ export const getTradeResult = ({commit}) => {
   })
 };
 
-export const registerConfirm = (vueContext, param) => {
-  return util.service.get("user/registrationConfirm/" + param)
+export const registerConfirm = (vueContext, {param1, param2}) => {
+  return util.service.get("user/registrationConfirm/" + param1 + "/" + param2)
     .then(response => {
       if (response) {
         util.common.control(response);
@@ -34,6 +34,47 @@ export const registerConfirm = (vueContext, param) => {
     }).catch(error => {
       util.common.control(error)
     })
+};
+
+export const changePasswordTokenControl = (vueContext, {param1, param2}) => {
+  return util.service.get("user/changePassword/" + param1 + "/" + param2)
+    .then(response => {
+      if (response) {
+        util.common.control(response);
+        return response;
+      }
+    }).catch(error => {
+      util.common.control(error)
+    })
+};
+
+export const changePassword = (vueContext, [id,param]) => {
+  param.password = util.randomCode(param.password);
+  param.matchingPassword = util.randomCode(param.matchingPassword);
+  util.service.put("user/changePassword/" + id, param)
+    .then(response => {
+      if (response) {
+        let toast = util.common.successToast(response.bodyText);
+        util.common.control(response);
+        util.common.routePush("login");
+      }
+    }).catch(error => {
+    util.common.control(error)
+  })
+  util.common.setNull(param);
+};
+
+export const reSendConfirmation = (vueContext, param) => {
+  util.service.put("user/reSendConfirmation", param)
+    .then(response => {
+      if (response) {
+        let toast = util.common.successToast(response.bodyText);
+        util.common.control(response);
+        util.common.routePush("login");
+      }
+    }).catch(error => {
+    util.common.control(error)
+  })
 };
 
 export const getUserAndMenus = (vueContext) => {
@@ -88,7 +129,7 @@ export const userRegister = (vueContext, registerData) => {
   util.service.post("user/registration", registerData)
     .then(response => {
       if (response) {
-        let toast = util.common.successToast("Lütfen mailinizi kontrol edin...");
+        let toast = util.common.successToast(response.bodyText);
         util.common.control(response, toast);
         util.common.routePush("login");
         return response;
@@ -99,6 +140,22 @@ export const userRegister = (vueContext, registerData) => {
   });
   util.common.setNull(registerData);
 };
+
+export const userForgotPassword = (vueContext, email) => {
+  util.service.put("user/forgotPassword", email)
+    .then(response => {
+      if (response) {
+        let toast = util.common.successToast(response.bodyText);
+        util.common.control(response, toast);
+        util.common.routePush("login");
+      }
+
+    }).catch(error => {
+    util.common.control(error);
+  });
+  util.common.setNull(email);
+};
+
 
 export const setTimeOutTimerExpiry = (vueContext, expiry) => {
   setTimeout(() => {

@@ -52,12 +52,12 @@ export const common = {
       case 401 :
         this.logoutSuccessfully();
         if (result.body !== undefined && result.body.message !== undefined) {
-          toast = this.prepareToast("Login Hatası", toastType.ERROR, result.body.message, true);
+          toast = this.prepareToast("Login Error", toastType.ERROR, result.body.message, true);
           store.commit("setMyToast", toast);
         }
         break;
       case 403 :
-        toast = this.prepareToast("Erişim Engeli", toastType.FORBIDDEN, "Bu işlem için yetkiniz bulunmamaktadır.", true);
+        toast = this.prepareToast("Access Denial", toastType.FORBIDDEN, "You are not authorized for this transaction.", true);
         store.commit("setMyToast", toast);
         break;
       case 404 :
@@ -67,7 +67,7 @@ export const common = {
         }
         break;
       case 500 :
-        toast = this.prepareToast("Hata", toastType.ERROR, "İşlem Gerçekleştirilemedi. Bir Hata Oluştu", true);
+        toast = this.prepareToast("Error", toastType.ERROR, "The operation could not be performed. Something went wrong", true);
         store.commit("setMyToast", toast);
         break;
     }
@@ -140,7 +140,7 @@ export const common = {
     return toast;
   },
   successToast(message) {
-    let toast = common.prepareToast("Bilgi", toastType.SUCCESS, message, true);
+    let toast = common.prepareToast("Information", toastType.SUCCESS, message, true);
     return toast;
   },
   prepareMenus(values) {
@@ -190,13 +190,15 @@ export const common = {
     };
   },
   setNull(object) {
-    let entries = Object.entries(object);
-    entries.forEach(([k, v]) => {
-      if (v !== null && typeof v === "object") {
-        this.setNull(object[k])
-      }
-      object[k] = null;
-    });
+    if(typeof object === "object"){
+      let entries = Object.entries(object);
+      entries.forEach(([k, v]) => {
+        if (v !== null && typeof v === "object") {
+          this.setNull(object[k])
+        }
+        object[k] = null;
+      });
+    }
   }
 };
 

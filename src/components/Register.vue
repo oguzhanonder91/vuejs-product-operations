@@ -54,7 +54,7 @@
                   </template>
                 </CInput>
                 <CButton color="success" @click="createUser" block>Create Account</CButton>
-                <CButton color="info" @click="goToLoginPage" block>Go to Login Page</CButton>
+                <CButton color="primary" @click="goToLoginPage" block>Go to Login Page</CButton>
               </CForm>
             </CCardBody>
           </CCard>
@@ -87,6 +87,7 @@
         util.common.routePush("login");
       },
       createUser() {
+        this.user.roleCode = "USER";
         this.$store.dispatch("userRegister", this.user);
       }
     }

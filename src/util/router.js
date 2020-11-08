@@ -43,6 +43,7 @@ const UserConfirmation = () => System.import('../components/UserConfirmation');
 const Login = () => System.import('../components/Login');
 const Register = () => System.import('../components/Register');
 const ForgotPassword = () => System.import('../components/ForgotPassword');
+const ChangePassword = () => System.import('../components/ChangePassword');
 
 Vue.use(VueRouter);
 
@@ -106,8 +107,19 @@ const routes = [
     component: UserConfirmation,
     children: [
       {
-        path: ":param",
+        path: ":param1/:param2",
         component: UserConfirmation,
+      }
+    ]
+  },
+  {
+    path: "/user/changePassword",
+    name: "ChangePassword",
+    component: ChangePassword,
+    children: [
+      {
+        path: ":param1/:param2",
+        component: ChangePassword,
       }
     ]
   },

@@ -4,25 +4,32 @@
       <CRow class="justify-content-center">
         <CJumbotron>
           <h1 class="display-4">
+            User Confirmation Info
+          </h1>
+          <h1 class="display-6">
             <CAlert>
               {{message}}
             </CAlert>
           </h1>
-          <CAlert
-            :show.sync="currentAlertCounter"
-          >
-            You will be redirected to Login page in {{currentAlertCounter}} seconds.
-            <CProgress
-              :max="10"
-              :value="currentAlertCounter"
-              height="3px"
-              color="primary"
-              animate
-            />
-          </CAlert>
+          <div v-if="this.key === 'valid'">
+            <CAlert
+              :show.sync="currentAlertCounter"
+            >
+              You will be redirected to Login page in {{currentAlertCounter}} seconds.
+              <CProgress
+                :max="10"
+                :value="currentAlertCounter"
+                height="3px"
+                color="primary"
+                animate
+              />
+            </CAlert>
+            <p>If you don't want to wait please click</p>
+          </div>
 
-          <p>If you don't want to wait please click</p>
           <CButton @click="goToLogin" color="primary">Go to Login Page</CButton>
+          <CButton  v-if = "this.key !== 'valid'" @click="reSend" color="primary">Resend Confirmation Code</CButton>
+
         </CJumbotron>
       </CRow>
     </CContainer>
@@ -37,12 +44,17 @@
     data() {
       return {
         message: "",
-        currentAlertCounter: 0
+        currentAlertCounter: 0,
+        key: "",
+        id : ""
       }
     },
     methods: {
       goToLogin() {
         util.common.routePush("login");
+      },
+      reSend(){
+        this.$store.dispatch("reSendConfirmation", this.id)
       }
     },
     watch: {
@@ -54,12 +66,15 @@
     },
     created() {
       let split = this.$route.path.split("/");
-      let param = split[split.length - 1];
-      if (param !== undefined && param.length > 0) {
-        this.$store.dispatch("registerConfirm", param)
+      let param1 = split[split.length - 2];
+      let param2 = split[split.length - 1];
+      if (param1 !== undefined && param1.length > 0 && param2 !== undefined && param2.length > 0) {
+        this.$store.dispatch("registerConfirm", {param1, param2})
           .then(res => {
             if (res) {
-              this.message = res.bodyText;
+              this.message = res.body.message;
+              this.key = res.body.key;
+              this.id = res.body.data;
               this.currentAlertCounter = 10;
             }
           })

@@ -52,7 +52,7 @@ const actions = {
           };
           dispatch("setTradeResult", tradeResult);
         }
-        let toast = util.common.successToast("İşlem Başarılı Şekilde Gerçekleşti...");
+        let toast = util.common.successToast("Saved successfully.");
         util.common.control(response, toast);
 
       }).catch(error => {

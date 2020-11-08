@@ -44,7 +44,7 @@
     },
     methods: {
       sendEmail() {
-
+        this.$store.dispatch("userForgotPassword",this.email);
       },
       goToLogin() {
         util.common.routePush("login");
