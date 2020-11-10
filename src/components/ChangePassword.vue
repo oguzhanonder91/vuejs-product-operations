@@ -32,7 +32,7 @@
                   </CInput>
                   <CButton color="success" @click="changePassword" block>Change Password</CButton>
                 </div>
-                <CButton color="primary" @click="goToLoginPage" block>Go to Login Page</CButton>
+                <CButton color="primary mt-2" @click="goToLoginPage" block>Go to Login Page</CButton>
               </CForm>
             </CCardBody>
           </CCard>

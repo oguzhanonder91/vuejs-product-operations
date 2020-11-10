@@ -2,38 +2,44 @@
   <div class="d-flex align-items-center min-vh-100">
     <CContainer fluid>
       <CRow class="justify-content-center">
-        <CJumbotron>
-          <h1 class="display-4">
-            User Confirmation Info
-          </h1>
-          <h1 class="display-6">
-            <CAlert>
-              {{message}}
-            </CAlert>
-          </h1>
-          <div v-if="this.key === 'valid'">
-            <CAlert
-              :show.sync="currentAlertCounter"
-            >
-              You will be redirected to Login page in {{currentAlertCounter}} seconds.
-              <CProgress
-                :max="10"
-                :value="currentAlertCounter"
-                height="3px"
-                color="primary"
-                animate
-              />
-            </CAlert>
-            <p>If you don't want to wait please click</p>
-          </div>
-
-          <CButton @click="goToLogin" color="primary">Go to Login Page</CButton>
-          <CButton  v-if = "this.key !== 'valid'" @click="reSend" color="primary">Resend Confirmation Code</CButton>
-
-        </CJumbotron>
+        <CCol md="6">
+          <CCard class="mx-4 mb-0">
+            <CCardBody class="p-4">
+              <CForm>
+                <h1>User Confirmation</h1>
+                <p class="text-muted">{{message}}</p>
+                <div v-if="this.key === 'valid'">
+                  <CAlert
+                    :show.sync="currentAlertCounter"
+                  >
+                    You will be redirected to Login page in {{currentAlertCounter}} seconds.
+                    <CProgress
+                      :max="10"
+                      :value="currentAlertCounter"
+                      height="3px"
+                      color="primary"
+                      animate
+                    />
+                  </CAlert>
+                  <p>If you don't want to wait please click</p>
+                </div>
+                <CButton  v-if = "this.key !== 'valid'" @click="reSend" block color="success">Resend Confirmation Code</CButton>
+                <CButton @click="goToLogin" color="primary" block>Go to Login Page</CButton>
+              </CForm>
+            </CCardBody>
+          </CCard>
+        </CCol>
       </CRow>
     </CContainer>
   </div>
+
+
+
+
+
+
+
+
 </template>
 
 <script>

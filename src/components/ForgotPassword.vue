@@ -2,24 +2,28 @@
   <div class="d-flex align-items-center min-vh-100">
     <CContainer fluid>
       <CRow class="justify-content-center">
-        <CJumbotron>
-          <h1 class="display-4">
-            Forgot Password
-          </h1>
-          <p>Enter your e-mail address registered on System below, and we will send the link to change your password to
-            your e-mail.</p>
-          <CInput
-            v-model="email"
-            placeholder="Email"
-            autocomplete="email"
-          >
-            <template #prepend-content>
-              <CIcon name="cil-user"/>
-            </template>
-          </CInput>
-          <CButton class="col-lg-12" @click="sendEmail" color="primary">Send</CButton>
-          <CButton class="col-lg-12 mt-1" @click="goToLogin" color="primary">Login Page</CButton>
-        </CJumbotron>
+        <CCol md="6">
+          <CCard class="mx-4 mb-0">
+            <CCardBody class="p-4">
+              <CForm>
+                <h1>Forgot Password</h1>
+                <p class="text-muted">Enter your e-mail address registered on System below, and we will send the link to change your password to
+                  your e-mail.</p>
+                  <CInput
+                    v-model="email"
+                    placeholder="Email"
+                    autocomplete="email"
+                  >
+                    <template #prepend-content>
+                      <CIcon name="cil-user"/>
+                    </template>
+                  </CInput>
+                <CButton color="success" @click="sendEmail" block>Send</CButton>
+                <CButton color="primary mt-2" @click="goToLogin" block>Login Page</CButton>
+              </CForm>
+            </CCardBody>
+          </CCard>
+        </CCol>
       </CRow>
     </CContainer>
   </div>
