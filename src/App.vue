@@ -8,7 +8,7 @@
       <h1 class="d-inline">Loading... </h1>
       <CSpinner size="5xl" color="success"/>
     </CElementCover>
-    <CToaster :autohide="5000" position="top-right">
+    <CToaster :autohide="3000" position="top-right">
       <MyCToast :show.sync="getMyToast.show" :header="getMyToast.header">
         <CIcon :height="42" :name="getMyToast.icon"/>
         <b>{{getMyToast.message}}</b>
